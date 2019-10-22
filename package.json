@@ -1,5 +1,5 @@
 {
-  "name": "@serverless/tencent-api-gateway",
+  "name": "@serverless/tencent-apigateway",
   "description": "Tencent Cloud API Gateway",
   "version": "0.0.1",
   "main": "./serverless.js",
