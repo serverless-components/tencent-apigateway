@@ -1,4 +1,4 @@
-# tencent-api-gateway
+# tencent-apigateway
 
 Easily provision Tencent API Gateway using [Serverless Components](https://github.com/serverless/components).
 
@@ -34,7 +34,7 @@ TENCENT_SECRET_KEY=XXX
 # serverless.yml
 
 restApi:
-  component: "@serverless/tencent-api-gateway"
+  component: "@serverless/tencent-apigateway"
   inputs:
     Region: ap-guangzhou # is required,default value is ap-guangzhou
     description: Serverless REST API 
@@ -66,7 +66,7 @@ $ serverless
 
 ### Test
 ```text
-tongtingting:tencent-api-gateway tongtingting$ sls
+tongtingting:tencent-apigateway tongtingting$ sls
 
 restApi: 
     protocol:      HTTP
