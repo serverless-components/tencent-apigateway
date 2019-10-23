@@ -1,7 +1,6 @@
 const Joi = require('joi');
 
 const CreateService = ({ apig, ...inputs }) => {
-  console.log(inputs);
   return new Promise((resolve, reject) => {
     apig.request(
       {
@@ -91,6 +90,25 @@ const ModifyService = ({ apig, ...inputs }) => {
           return reject(data.codeDesc + '.' + data.message)
         }
         resolve(data.serviceId)
+      }
+    )
+  })
+}
+
+const DescribeUsagePlan = ({apig, ...inputs}) => {
+  return new Promise((resolve, reject) => {
+    apig.request(
+      {
+        Action: 'DescribeUsagePlan',
+        ...inputs
+      },
+      function(err, data) {
+        if (err) {
+          return reject(err)
+        } else if (data.code !== 0) {
+          return reject(data.codeDesc + '.' + data.message)
+        }
+        resolve(data)
       }
     )
   })
@@ -361,7 +379,7 @@ const Validate = (config) => {
     serviceName: Joi.string().min(2).max(50).required().error(new Error('"serviceName" is required')),
     description: Joi.string().max(200).optional(),
     environment: Joi.string().regex(/^(prepub|test|release)$/).optional().default('release'),
-    usagePlan: Joi.object().keys(usagePlanScheme).required().error(new Error('"usagePlan" is required '))
+    // usagePlan: Joi.object().keys(usagePlanScheme)
   }).options({ allowUnknown: true })
 
   const gloalResult = Joi.validate(config, globalScheme)
@@ -413,5 +431,6 @@ module.exports = {
   DeleteUsagePlan,
   DeleteApiKey,
   DisableApiKey,
+  DescribeUsagePlan,
   Validate
 }
