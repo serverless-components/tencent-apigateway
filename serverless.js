@@ -84,10 +84,15 @@ class TencentApiGateway extends Component {
 
     const apiAuthSetting = async (ctx, region, apiClient, endpoint) => {
 
-      const usagePlan = endpoint.usagePlan
+      let usagePlan = endpoint.usagePlan
+      if (usagePlan == null) {
+        usagePlan = {}
+        ctx.context.debug(`UsagePlan is empty.`)
+      }
+
       const usageInputs = {
         Region: region,
-        usagePlanName: usagePlan.usagePlanName || `usagePlanName_${endpoint.apiId.split('api-')[1]}`,
+        usagePlanName: usagePlan.usagePlanName || '',
         usagePlanDesc: usagePlan.usagePlanDesc || '',
         maxRequestNumPreSec: usagePlan.maxRequestNumPreSec,
         maxRequestNum: usagePlan.maxRequestNum
@@ -95,7 +100,7 @@ class TencentApiGateway extends Component {
 
       let usagePlanId = null;
       if (!usagePlan.usagePlanId) {
-        ctx.context.debug(`UsagePlan ID not found in state. Creating a new UsagePlan.`)
+        ctx.context.debug(`Creating a new UsagePlan.`)
         usagePlanId = await CreateUsagePlan({ apig: apiClient, ...usageInputs })
         ctx.context.debug(`UsagePlan with ID ${usagePlanId} created.`)
       } else {
