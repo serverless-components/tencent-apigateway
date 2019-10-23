@@ -36,23 +36,41 @@ TENCENT_SECRET_KEY=XXX
 restApi:
   component: "@serverless/tencent-apigateway"
   inputs:
-    Region: ap-guangzhou # is required,default value is ap-guangzhou
-    description: Serverless REST API 
-    serviceName: serviceName
-    serviceDesc: This is a service description
-    environment: release # is required,default value is release
-    authRequired: TRUE # is required,default value is TRUE
-    enableCORS: TRUE # is required,default value is TRUE
-    serviceTimeout: 15 # is required,default value is 15
-    protocol: HTTP # is required,default value is HTTP
-    serviceScf:
-      IsIntegratedResponse: TRUE # is required,default value is TRUEs
-      FunctionQualifier: $LATEST # is required,default value is $LATEST
-      FunctionName: aaa # is required
-      FunctionNamespace: aaa # is required
-    requestConfig: # is required
-      path: /frontend/path
-      method: GET
+
+    serviceId: service-8dsikiq6 
+    # default ap-guangzhou
+    region: ap-shanghai  
+    # http | https | http&https
+    protocol: http 
+    # Up to 50 characters，(a-z,A-Z,0-9,_)
+    serviceName: sls
+    description: the sls service 
+    environment: release 
+    endpoints:
+      - path: /users  # required
+        method: POST  # required
+        function:
+          functionName: aaa # required
+      - path: /test
+        apiId: api-id
+        method: GET
+        description: Serverless REST API # api apiDesc
+        enableCORS: TRUE 
+        function:
+          isIntegratedResponse: TRUE 
+          functionQualifier: $LATEST 
+          functionName: fist # required
+        usagePlan:
+          usagePlanId: 1111
+          usagePlanName: slscmp
+          usagePlanDesc: sls create
+          maxRequestNum: 1000
+        auth:
+          serviceTimeout: 15
+          secretName: secret  # required
+          # secretIds:
+          #   - AKIDNSdvdFcJ8GJ9th6qeZH0ll8r7dE6HHaSuchJ
+
 
 ```
 
