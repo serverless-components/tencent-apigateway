@@ -78,8 +78,8 @@ class TencentApiGateway extends Component {
     )
 
     const apig = new Capi({
-      SecretId: this.context.credentials.tencent.tencent_secret_id,
-      SecretKey: this.context.credentials.tencent.tencent_secret_key,
+      SecretId: this.context.credentials.tencent.SecretId,
+      SecretKey: this.context.credentials.tencent.SecretKey,
       serviceType: 'apigateway'
     })
     this.state.Region = Region
