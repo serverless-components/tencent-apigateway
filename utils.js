@@ -11,7 +11,26 @@ const CreateService = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
+        }
+        resolve(data.data)
+      }
+    )
+  })
+}
+
+const DeleteService = ({ apig, ...inputs }) => {
+  return new Promise((resolve, reject) => {
+    apig.request(
+      {
+        Action: 'DeleteService',
+        ...inputs
+      },
+      function(err, data) {
+        if (err) {
+          return reject(err)
+        } else if (data.code !== 0) {
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data.data)
       }
@@ -30,7 +49,7 @@ const DescribeService = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data)
       }
@@ -49,7 +68,26 @@ const CreateApi = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
+        }
+        resolve(data.apiId)
+      }
+    )
+  })
+}
+
+const DescribeApi = ({ apig, ...inputs }) => {
+  return new Promise((resolve, reject) => {
+    apig.request(
+      {
+        Action: 'DescribeApi',
+        ...inputs
+      },
+      function(err, data) {
+        if (err) {
+          return reject(err)
+        } else if (data.code !== 0) {
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data.apiId)
       }
@@ -68,7 +106,7 @@ const ModifyApi = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data.apiId)
       }
@@ -87,9 +125,28 @@ const ModifyService = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data.serviceId)
+      }
+    )
+  })
+}
+
+const DescribeUsagePlanSecretIds = ({apig, ...inputs}) => {
+  return new Promise((resolve, reject) => {
+    apig.request(
+      {
+        Action: 'DescribeUsagePlanSecretIds',
+        ...inputs
+      },
+      function(err, data) {
+        if (err) {
+          return reject(err)
+        } else if (data.code !== 0) {
+          return reject({code: data.codeDesc, message: data.message})
+        }
+        resolve(data)
       }
     )
   })
@@ -106,7 +163,7 @@ const DescribeUsagePlan = ({apig, ...inputs}) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data)
       }
@@ -125,7 +182,7 @@ const CreateUsagePlan = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data.usagePlanId)
       }
@@ -144,7 +201,7 @@ const ModifyUsagePlan = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data.usagePlanId)
       }
@@ -163,7 +220,26 @@ const CreateApiKey = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
+        }
+        resolve(data)
+      }
+    )
+  })
+}
+
+const DescribeApiKeysStatus = ({ apig, ...inputs }) => {
+  return new Promise((resolve, reject) => {
+    apig.request(
+      {
+        Action: 'DescribeApiKeysStatus',
+        ...inputs
+      },
+      function(err, data) {
+        if (err) {
+          return reject(err)
+        } else if (data.code !== 0) {
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data)
       }
@@ -182,7 +258,7 @@ const BindSecretIds = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data)
       }
@@ -201,7 +277,7 @@ const BindEnvironment = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data)
       }
@@ -220,7 +296,7 @@ const ReleaseService = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data)
       }
@@ -239,7 +315,7 @@ const UnReleaseService = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data)
       }
@@ -258,7 +334,7 @@ const DeleteApi = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data)
       }
@@ -277,7 +353,7 @@ const UnBindSecretIds = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data)
       }
@@ -296,7 +372,7 @@ const UnBindEnvironment = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data)
       }
@@ -315,7 +391,7 @@ const DeleteUsagePlan = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data)
       }
@@ -334,12 +410,18 @@ const DeleteApiKey = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data)
       }
     )
   })
+}
+
+const CheckExistsFromError = (err) => {
+  if (err && err.message.match('does not exist'))
+    return false
+  return true
 }
 
 const DisableApiKey = ({ apig, ...inputs }) => {
@@ -353,7 +435,7 @@ const DisableApiKey = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(data.codeDesc + '.' + data.message)
+          return reject({code: data.codeDesc, message: data.message})
         }
         resolve(data)
       }
@@ -432,5 +514,10 @@ module.exports = {
   DeleteApiKey,
   DisableApiKey,
   DescribeUsagePlan,
-  Validate
+  Validate,
+  DescribeApiKeysStatus,
+  DeleteService,
+  DescribeApi,
+  DescribeUsagePlanSecretIds,
+  CheckExistsFromError
 }
