@@ -36,7 +36,7 @@ TENCENT_SECRET_KEY=XXX
 restApi:
   component: "@serverless/tencent-apigateway"
   inputs:
-
+    # if dont't exixts create a new 
     serviceId: service-8dsikiq6 
     # default ap-guangzhou
     region: ap-shanghai  
@@ -52,6 +52,7 @@ restApi:
         function:
           functionName: aaa # required
       - path: /test
+        # if dont't exixts create a new 
         apiId: api-id
         method: GET
         description: Serverless REST API # api apiDesc
@@ -61,8 +62,9 @@ restApi:
           functionQualifier: $LATEST 
           functionName: fist # required
         usagePlan:
+          # if dont't exixts create a new 
           usagePlanId: 1111
-          usagePlanName: slscmp
+          usagePlanName: slscmp # required
           usagePlanDesc: sls create
           maxRequestNum: 1000
         auth:
