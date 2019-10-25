@@ -129,7 +129,6 @@ const ModifyApi = ({ apig, ...inputs }) => {
         ...inputs
       },
       function(err, data) {
-        console.log('ModifyApi',err, data)
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
