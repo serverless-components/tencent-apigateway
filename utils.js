@@ -11,7 +11,7 @@ const CreateService = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data.data)
       }
@@ -30,7 +30,7 @@ const DeleteService = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data.data)
       }
@@ -49,7 +49,7 @@ const DescribeService = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data)
       }
@@ -68,7 +68,7 @@ const CreateApi = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data.apiId)
       }
@@ -87,7 +87,7 @@ const DescribeApi = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data.apiId)
       }
@@ -106,7 +106,7 @@ const ModifyApi = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data.apiId)
       }
@@ -125,7 +125,7 @@ const ModifyService = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data.serviceId)
       }
@@ -144,7 +144,7 @@ const DescribeUsagePlanSecretIds = ({apig, ...inputs}) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data)
       }
@@ -163,7 +163,7 @@ const DescribeUsagePlan = ({apig, ...inputs}) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data)
       }
@@ -182,7 +182,7 @@ const CreateUsagePlan = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data.usagePlanId)
       }
@@ -201,7 +201,7 @@ const ModifyUsagePlan = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data.usagePlanId)
       }
@@ -220,7 +220,7 @@ const CreateApiKey = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data)
       }
@@ -239,7 +239,7 @@ const DescribeApiKeysStatus = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data)
       }
@@ -258,7 +258,7 @@ const BindSecretIds = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data)
       }
@@ -277,7 +277,7 @@ const BindEnvironment = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data)
       }
@@ -296,7 +296,7 @@ const ReleaseService = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data)
       }
@@ -315,7 +315,7 @@ const UnReleaseService = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data)
       }
@@ -334,7 +334,7 @@ const DeleteApi = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data)
       }
@@ -353,7 +353,7 @@ const UnBindSecretIds = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data)
       }
@@ -372,7 +372,7 @@ const UnBindEnvironment = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data)
       }
@@ -391,7 +391,7 @@ const DeleteUsagePlan = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data)
       }
@@ -410,7 +410,7 @@ const DeleteApiKey = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data)
       }
@@ -435,7 +435,7 @@ const DisableApiKey = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject({code: data.codeDesc, message: data.message})
+          return reject({code: data.code, message: data.message})
         }
         resolve(data)
       }
@@ -483,7 +483,9 @@ const Validate = (config) => {
     auth: {
       serviceTimeout: Joi.number().integer().optional().default(15),
       secretName: Joi.string().required(),
-      secretIds: Joi.array()
+      // Api returns a maximum of 100 rows of records at a time
+      // https://cloud.tencent.com/document/product/628/14920
+      secretIds: Joi.array().max(10)
     }
   }));
 
