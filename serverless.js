@@ -12,7 +12,6 @@ const {
   BindSecretIds,
   BindEnvironment,
   ReleaseService,
-  ModifyService,
   DescribeService,
   DeleteApi,
   UnBindSecretIds,
@@ -56,7 +55,7 @@ class TencentApiGateway extends Component {
     } = params
 
     this.context.debug(
-      `Starting API Gateway deployment with name ${apiName} in the ${region} region`
+      `Starting API-Gateway deployment with name ${apiName} in the ${region} region`
     )
 
     const apig = new Capi({
@@ -69,7 +68,7 @@ class TencentApiGateway extends Component {
       Region: region,
       serviceDesc: description,
       // Up to 50 characters，(a-z,A-Z,0-9,_)
-      serviceName,
+      secretName: serviceName,
       protocol: protocol.toLowerCase()
     }
 
@@ -108,10 +107,10 @@ class TencentApiGateway extends Component {
     }
 
     const state = {
-      protocol,
-      subDomain,
-      environment,
-      region,
+      protocol: protocol,
+      subDomain: subDomain,
+      environment: environment,
+      region: region,
       service: {
         value: serviceId,
         created: serviceCreated
@@ -242,18 +241,18 @@ class TencentApiGateway extends Component {
 
       const apiInputs = {
         Region: region,
-        serviceId,
-        apiName,
+        serviceId: serviceId,
+        apiName: apiName,
         apiDesc: endpoint.description,
         apiType: 'NORMAL',
         authRequired: endpoint.auth ? 'TRUE' : 'FALSE',
         enableCORS: endpoint.enableCORS ? 'TRUE' : 'FALSE',
-        requestConfig,
-        serviceType,
-        serviceTimeout,
+        serviceType: serviceType,
+        requestConfig: requestConfig,
+        serviceTimeout: serviceTimeout,
         serviceScfFunctionName: endpoint.function.functionName,
         serviceScfIsIntegratedResponse: endpoint.function.isIntegratedResponse ? 'TRUE' : 'FALSE',
-        serviceScfFunctionQualifier: endpoint.function.functionQualifier ? 'TRUE' : 'FALSE'
+        serviceScfFunctionQualifier: endpoint.function.functionQualifier ? endpoint.function.functionQualifier : "$LATEST"
       }
       const apiId = {
         value: null,
@@ -343,9 +342,9 @@ class TencentApiGateway extends Component {
 
       this.context.debug(`Deploying service with id ${serviceId}.`)
       await ReleaseService({
-        apig,
+        apig: apig,
         Region: region,
-        serviceId,
+        serviceId: serviceId,
         environmentName: environment,
         releaseDesc: 'Serverless api-gateway component deploy'
       })
@@ -412,18 +411,25 @@ class TencentApiGateway extends Component {
 
       if (endpoint.usagePlanId) {
         if (!_.isEmpty(endpoint.secretIds.value)) {
-          await UnBindSecretIds({ apig, Region: region, 
-                    secretIds: endpoint.secretIds.value, 
-                    usagePlanId: endpoint.usagePlanId.value })
+          // await UnBindSecretIds({ apig, Region: region, 
+          //           secretIds: endpoint.secretIds.value, 
+          //           usagePlanId: endpoint.usagePlanId.value })
+          await UnBindSecretIds({
+            apig: apig,
+            Region: region,
+            secretIds: endpoint.secretIds.value,
+            usagePlanId: endpoint.usagePlanId.value
+          })
           this.context.debug(`Unbinding secret key to usage plan with ID ${endpoint.usagePlanId.value}.`)
         }
+        
         await UnBindEnvironment({
-          apig,
+          apig:apig,
           Region: region,
           serviceId: state.service.value,
           usagePlanIds: [endpoint.usagePlanId.value],
           environment: state.environment,
-          bindType,
+          bindType: bindType,
           apiIds: [endpoint.apiId.value]
         })
         this.context.debug(
@@ -445,7 +451,7 @@ class TencentApiGateway extends Component {
       }
       if (endpoint.apiId && endpoint.apiId.created == true) {
         await DeleteApi({
-          apig,
+          apig: apig,
           Region: region,
           apiId: endpoint.apiId.value,
           serviceId: state.service.value
@@ -455,17 +461,17 @@ class TencentApiGateway extends Component {
     }
 
     await UnReleaseService({
-      apig,
+      apig: apig,
       Region: region,
       serviceId: state.service.value,
       environmentName: state.environment,
-      unReleaseDesc: 'Serverless api-gateway component offline'
+      unReleaseDesc: 'Serverless API-Gateway component offline'
     })
 
     if (state.service.created == true) {
       this.context.debug(`Removing any previously deployed service. ${state.service.value}`)
       await DeleteService({
-        apig,
+        apig: apig,
         serviceId: state.service.value,
         Region: region
       })

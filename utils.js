@@ -1,4 +1,4 @@
-const Joi = require('joi');
+const Joi = require('joi')
 
 
 function HttpError(code, message) {
@@ -159,7 +159,7 @@ const ModifyService = ({ apig, ...inputs }) => {
   })
 }
 
-const DescribeUsagePlanSecretIds = ({apig, ...inputs}) => {
+const DescribeUsagePlanSecretIds = ({ apig, ...inputs }) => {
   return new Promise((resolve, reject) => {
     apig.request(
       {
@@ -178,7 +178,7 @@ const DescribeUsagePlanSecretIds = ({apig, ...inputs}) => {
   })
 }
 
-const DescribeUsagePlan = ({apig, ...inputs}) => {
+const DescribeUsagePlan = ({ apig, ...inputs }) => {
   return new Promise((resolve, reject) => {
     apig.request(
       {
@@ -445,8 +445,9 @@ const DeleteApiKey = ({ apig, ...inputs }) => {
 }
 
 const CheckExistsFromError = (err) => {
-  if (err && err.message.match('does not exist'))
+  if (err && err.message.match('does not exist')) {
     return false
+  }
   return true
 }
 
@@ -489,29 +490,61 @@ const DisableApiKey = ({ apig, ...inputs }) => {
 }
 
 const Validate = (config) => {
-
   const usagePlanScheme = {
     usagePlanId: Joi.string().optional(),
-    usagePlanDesc: Joi.string().max(200).optional(),
+    usagePlanDesc: Joi.string()
+      .max(200)
+      .optional(),
     // -1 disable quota
-    maxRequestNum: Joi.number().integer().min(1).max(99999999).optional().default(-1),
-    maxRequestNumPreSec: Joi.number().integer().min(1).max(2000).optional().default(1000),
-    usagePlanName: Joi.string().min(2).max(50).required().error(new Error('"usagePlan.usagePlanName" is required'))
+    maxRequestNum: Joi.number()
+      .integer()
+      .min(1)
+      .max(99999999)
+      .optional()
+      .default(-1),
+    maxRequestNumPreSec: Joi.number()
+      .integer()
+      .min(1)
+      .max(2000)
+      .optional()
+      .default(1000),
+    usagePlanName: Joi.string()
+      .min(2)
+      .max(50)
+      .required()
+      .error(new Error('"usagePlan.usagePlanName" is required'))
   }
 
-  const globalScheme = Joi.object().keys({
-    region: Joi.string().optional().default('ap-guangzhou'),
-    serviceId: Joi.string().optional(),
-    protocol: Joi.string().regex(/^(http|https|http&https)$/).optional().default('http'),
-    serviceName: Joi.string().min(2).max(50).required().error(new Error('"serviceName" is required')),
-    description: Joi.string().max(200).optional(),
-    environment: Joi.string().regex(/^(prepub|test|release)$/).optional().default('release'),
-    // usagePlan: Joi.object().keys(usagePlanScheme)
-  }).options({ allowUnknown: true })
+  const globalScheme = Joi.object()
+    .keys({
+      region: Joi.string()
+        .optional()
+        .default('ap-guangzhou'),
+      serviceId: Joi.string().optional(),
+      protocol: Joi.string()
+        .regex(/^(http|https|http&https)$/)
+        .optional()
+        .default('http'),
+      serviceName: Joi.string()
+        .min(2)
+        .max(50)
+        .required()
+        .error(new Error('"serviceName" is required')),
+      description: Joi.string()
+        .max(200)
+        .optional(),
+      environment: Joi.string()
+        .regex(/^(prepub|test|release)$/)
+        .optional()
+        .default('release')
+      // usagePlan: Joi.object().keys(usagePlanScheme)
+    })
+    .options({ allowUnknown: true })
 
   const gloalResult = Joi.validate(config, globalScheme)
-  if (gloalResult.error) 
+  if (gloalResult.error) {
     throw gloalResult.error
+  }
 
   // Api returns a maximum of 100 rows of records at a time
   const endpointsScheme = Joi.array().max(100).items(Joi.object().keys({
@@ -536,8 +569,9 @@ const Validate = (config) => {
   })).required().error(new Error('endpoints must contain less than or equal to 100 items'));
 
   const endpointsResult = Joi.validate(config.endpoints, endpointsScheme)
-  if (endpointsResult.error)
+  if (endpointsResult.error) {
     throw endpointsResult.error
+  }
 
   return gloalResult.value
 }
