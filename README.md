@@ -36,33 +36,28 @@ TENCENT_SECRET_KEY=XXX
 restApi:
   component: "@serverless/tencent-apigateway"
   inputs:
-    # if dont't exixts create a new 
-    serviceId: service-8dsikiq6 
-    # default ap-guangzhou
-    region: ap-shanghai  
-    # http | https | http&https
-    protocol: http 
-    # Up to 50 characters，(a-z,A-Z,0-9,_)
-    serviceName: sls
+    # serviceId: service-8dsikiq6 # if you don't want to use a api-gateway which exists, please do not add serviceId
+    region: ap-shanghai # default ap-guangzhou
+    protocol: http #  http | https | http&https
+    serviceName: sls # up to 50 characters，(a-z,A-Z,0-9,_)
     description: the sls service 
     environment: release 
-    endpoints:
+    endpoints: # need at least one endpoints
       - path: /users  # required
         method: POST  # required
         function:
           functionName: aaa # required
       - path: /test
-        # if dont't exixts create a new 
-        apiId: api-id
+        apiId: api-id # if you don't want to use a api-gateway which exists, please do not add serviceId
         method: GET
-        description: Serverless REST API # api apiDesc
+        description: Serverless REST API
         enableCORS: TRUE 
         function:
           isIntegratedResponse: TRUE 
           functionQualifier: $LATEST 
           functionName: fist # required
         usagePlan:
-          # if dont't exixts create a new 
+          # if dont't exists create a new 
           usagePlanId: 1111
           usagePlanName: slscmp # required
           usagePlanDesc: sls create
