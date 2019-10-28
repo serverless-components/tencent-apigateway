@@ -41,7 +41,7 @@ class TencentApiGateway extends Component {
 
     inputs.apiName = this.id.split('Template.')[1]
 
-    inputs.serviceName = inputs.serviceName ? inputs.serviceName : "serverless"
+    inputs.serviceName = inputs.serviceName ? inputs.serviceName : 'serverless'
 
     const params = Validate(inputs)
     let {
@@ -55,7 +55,6 @@ class TencentApiGateway extends Component {
       environment,
       endpoints
     } = params
-
 
     this.context.debug(
       `Starting API-Gateway deployment with name ${apiName} in the ${region} region`

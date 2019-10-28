@@ -3,7 +3,7 @@ const Joi = require('joi')
 
 function HttpError(code, message) {
   this.code = code || 0
-  this.message = message || '' 
+  this.message = message || ''
 }
 HttpError.prototype = Error.prototype;
 
