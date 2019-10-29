@@ -28,7 +28,8 @@ const {
   DeleteService,
   CheckExistsFromError,
   DescribeApi,
-  DescribeApisStatus
+  DescribeApisStatus,
+  ModifyService
 } = require('./utils')
 
 const serviceType    = 'SCF'
@@ -106,6 +107,9 @@ class TencentApiGateway extends Component {
       this.context.debug(`Service with ID ${serviceMsg.serviceId} created.`)
       serviceId = serviceMsg.serviceId
       subDomain = serviceMsg.subDomain
+    } else {
+      this.context.debug(`Updating service with serviceId ${serviceId}.`)
+      await ModifyService({ apig, serviceId, ...serviceInputs })
     }
 
     const state = {
