@@ -371,6 +371,8 @@ class TencentApiGateway extends Component {
         })
 
         if (!_.isEmpty(oldApi)) {
+          endpoint.apiId = oldApi.apiId
+          
           this.context.debug(
             `Endpoint ${endpoint.method} ${endpoint.path} already exists with id ${oldApi.apiId}.`
           )
@@ -384,7 +386,6 @@ class TencentApiGateway extends Component {
             }
           })
           if (!_.isEmpty(localApi)) {
-            endpoint.apiId = oldApi.apiId
             apiId.created  = localApi.apiId.created
           }
         }
