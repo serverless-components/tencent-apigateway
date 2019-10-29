@@ -22,6 +22,10 @@ $ touch serverless.yml
 $ touch .env           # your Tencent api keys
 ```
 
+If you don't have a Tencent Cloud account, you could [sign up](https://intl.cloud.tencent.com/register) first.  
+
+If you already login in, find  `TENCENT_SECRET_ID` and `TENCENT_SECRET_KEY`  in [Tencent Console](https://console.cloud.tencent.com/cam/capi).
+
 ```
 # .env
 TENCENT_SECRET_ID=XXX
@@ -39,7 +43,7 @@ restApi:
     # serviceId: service-8dsikiq6 # if you don't want to use a api-gateway which exists, please do not add serviceId
     region: ap-shanghai # default ap-guangzhou
     protocol: http #  http | https | http&https
-    serviceName: sls # up to 50 characters，(a-z,A-Z,0-9,_)
+    # serviceName: sls # up to 50 characters，(a-z,A-Z,0-9,_)
     description: the sls service 
     environment: release 
     endpoints: # need at least one endpoints

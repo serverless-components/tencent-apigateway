@@ -41,6 +41,8 @@ class TencentApiGateway extends Component {
 
     inputs.apiName = this.id.split('Template.')[1]
 
+    inputs.serviceName = inputs.serviceName ? inputs.serviceName : 'serverless'
+
     const params = Validate(inputs)
     let {
       region,
