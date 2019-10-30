@@ -38,7 +38,7 @@ TENCENT_SECRET_KEY=XXX
 # serverless.yml
 
 restApi:
-  component: "@serverless/tencent-apigateway"
+  component: "@serverless/tencent-apig"
   inputs:
     # serviceId: service-8dsikiq6 # if you don't want to use a api-gateway which exists, please do not add serviceId
     region: ap-shanghai # default ap-guangzhou
