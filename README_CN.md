@@ -54,7 +54,7 @@ TENCENT_APP_ID=123
 # serverless.yml
 
 restApi:
-  component: "@serverless/tencent-apig"
+  component: "@serverless/tencent-apigateway"
   inputs:
 
     serviceId: service-8dsikiq6 
