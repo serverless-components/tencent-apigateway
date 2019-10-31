@@ -343,7 +343,7 @@ class TencentApiGateway extends Component {
         apiDesc: endpoint.description,
         apiType: 'NORMAL',
         authRequired: endpoint.auth ? 'TRUE' : 'FALSE',
-        enableCORS: endpoint.enableCORS ? 'FALSE' : 'TRUE',
+        enableCORS: endpoint.enableCORS ? 'TRUE' : 'FALSE',
         serviceType: serviceType,
         requestConfig: requestConfig,
         serviceTimeout: serviceTimeout,

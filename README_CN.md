@@ -75,9 +75,9 @@ restApi:
         apiId: api-id
         method: GET
         description: Serverless REST API # api apiDesc
-        enableCORS: TRUE 
+        enableCORS: TRUE # default: FALSE
         function:
-          isIntegratedResponse: TRUE 
+          isIntegratedResponse: TRUE  # default: FALSE
           functionQualifier: $LATEST 
           functionName: fist # required
         usagePlan:

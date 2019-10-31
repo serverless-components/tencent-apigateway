@@ -525,7 +525,7 @@ const Validate = (config) => {
           .optional(),
         enableCORS: Joi.boolean()
           .optional()
-          .default(true),
+          .default(false),
         path: Joi.string().required(),
         method: Joi.string()
           .regex(/^(GET|POST|PUT|DELETE|HEAD|ANY)$/)
@@ -534,7 +534,7 @@ const Validate = (config) => {
           .keys({
             isIntegratedResponse: Joi.boolean()
               .optional()
-              .default(true),
+              .default(false),
             functionQualifier: Joi.string()
               .optional()
               .default('$LATEST'),

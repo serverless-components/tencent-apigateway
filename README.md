@@ -55,9 +55,9 @@ restApi:
         apiId: api-id # if you don't want to use a api-gateway which exists, please do not add serviceId
         method: GET
         description: Serverless REST API
-        enableCORS: TRUE 
+        enableCORS: TRUE # default: FALSE
         function:
-          isIntegratedResponse: TRUE 
+          isIntegratedResponse: TRUE  # default: FALSE
           functionQualifier: $LATEST 
           functionName: fist # required
         usagePlan:
