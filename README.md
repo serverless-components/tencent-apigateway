@@ -6,6 +6,7 @@ Easily provision Tencent API Gateway using [Serverless Components](https://githu
 2. [Create](#2-create)
 3. [Configure](#3-configure)
 4. [Deploy](#4-deploy)
+5. [Remove](#5-Remove)
 
 ### 1. Install
 
@@ -40,69 +41,65 @@ TENCENT_SECRET_KEY=XXX
 restApi:
   component: "@serverless/tencent-apigateway"
   inputs:
-    # serviceId: service-8dsikiq6 # if you don't want to use a api-gateway which exists, please do not add serviceId
-    region: ap-shanghai # default ap-guangzhou
-    protocol: http #  http | https | http&https
-    # serviceName: sls # up to 50 characters，(a-z,A-Z,0-9,_)
-    description: the sls service 
-    environment: release 
-    endpoints: # need at least one endpoints
-      - path: /users  # required
-        method: POST  # required
+    region: ap-shanghai
+    protocol: http
+    serviceName: serverless
+    environment: release
+    endpoints:
+      - path: /users
+        method: POST
         function:
-          functionName: aaa # required
-      - path: /test
-        apiId: api-id # if you don't want to use a api-gateway which exists, please do not add serviceId
-        method: GET
-        description: Serverless REST API
-        enableCORS: TRUE # default: FALSE
-        function:
-          isIntegratedResponse: TRUE  # default: FALSE
-          functionQualifier: $LATEST 
-          functionName: fist # required
-        usagePlan:
-          # if dont't exists create a new 
-          usagePlanId: 1111
-          usagePlanName: slscmp # required
-          usagePlanDesc: sls create
-          maxRequestNum: 1000
-        auth:
-          serviceTimeout: 15
-          secretName: secret  # required
-          # secretIds:
-          #   - AKIDNSdvdFcJ8GJ9th6qeZH0ll8r7dE6HHaSuchJ
-
-
+          functionName: myFunction
 ```
+
+* [Click here to view the configuration document](https://github.com/serverless-tencent/tencent-apigateway/blob/master/docs/configure.md)
+
 
 ### 4. Deploy
 
 ```shell
-$ serverless
+$ sls --debug
+
+  DEBUG ─ Resolving the template's static variables.
+  DEBUG ─ Collecting components from the template.
+  DEBUG ─ Downloading any NPM components found in the template.
+  DEBUG ─ Analyzing the template's components dependencies.
+  DEBUG ─ Creating the template's components graph.
+  DEBUG ─ Syncing template state.
+  DEBUG ─ Executing the template's components graph.
+  DEBUG ─ Starting API-Gateway deployment with name restApi in the ap-shanghai region
+  DEBUG ─ Service with ID service-g1ihx7c7 created.
+  DEBUG ─ API with id api-4dv8r7wg created.
+  DEBUG ─ Deploying service with id service-g1ihx7c7.
+  DEBUG ─ Deployment successful for the api named restApi in the ap-shanghai region.
+
+  restApi: 
+    protocol:    http
+    subDomain:   service-g1ihx7c7-1300415943.ap-shanghai.apigateway.myqcloud.com
+    environment: release
+    region:      ap-shanghai
+    serviceId:   service-g1ihx7c7
+    apis: 
+      - 
+        path:   /users
+        method: POST
+        apiId:  api-4dv8r7wg
+
+  24s › restApi › done
+
 ```
 
 &nbsp;
 
-### Test
+### 5. Remove
 ```text
-tongtingting:tencent-apigateway tongtingting$ sls
+$ sls remove --debug
 
-restApi: 
-    protocol:      HTTP
-    serviceId:     service-********
-    subDomain:     service-********-**********.ap-guangzhou.apigateway.myqcloud.com
-    requestConfig: 
-      path:   /frontend/path
-      method: GET
-    identity: 
-      secretIds: 
-        - AKID************************
+  DEBUG ─ Flushing template state and removing all components.
+  DEBUG ─ Removing any previously deployed API. api-4dv8r7wg
+  DEBUG ─ Removing any previously deployed service. service-g1ihx7c7
 
-  16s › restApi › done
-  
-tongtingting:tencent-api-gateway tongtingting$ sls remove
-
-  19s › restApi › done
+  13s › restApi › done
 
 ```
 

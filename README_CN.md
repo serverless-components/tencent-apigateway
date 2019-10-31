@@ -37,8 +37,7 @@ $ touch .env # 腾讯云的配置信息
 
 如果没有腾讯云账号，可以在此[注册新账号](https://cloud.tencent.com/register)。
 
-如果已有腾讯云账号，可以在[API密钥管理
-](https://console.cloud.tencent.com/cam/capi)中获取`APPID`, `SecretId` 和`SecretKey`.
+如果已有腾讯云账号，可以在[API密钥管理](https://console.cloud.tencent.com/cam/capi)中获取`APPID`, `SecretId` 和`SecretKey`.
 
 ```
 # .env
@@ -56,79 +55,70 @@ TENCENT_APP_ID=123
 restApi:
   component: "@serverless/tencent-apigateway"
   inputs:
-
-    serviceId: service-8dsikiq6 
-    # default ap-guangzhou
-    region: ap-shanghai  
-    # http | https | http&https
-    protocol: http 
-    # Up to 50 characters，(a-z,A-Z,0-9,_)
-    serviceName: sls
-    description: the sls service 
-    environment: release 
+    region: ap-shanghai
+    protocol: http
+    serviceName: serverless
+    environment: release
     endpoints:
-      - path: /users  # required
-        method: POST  # required
+      - path: /users
+        method: POST
         function:
-          functionName: aaa # required
-      - path: /test
-        apiId: api-id
-        method: GET
-        description: Serverless REST API # api apiDesc
-        enableCORS: TRUE # default: FALSE
-        function:
-          isIntegratedResponse: TRUE  # default: FALSE
-          functionQualifier: $LATEST 
-          functionName: fist # required
-        usagePlan:
-          usagePlanId: 1111
-          usagePlanName: slscmp
-          usagePlanDesc: sls create
-          maxRequestNum: 1000
-        auth:
-          serviceTimeout: 15
-          secretName: secret  # required
-          # secretIds:
-          #   - AKIDNSdvdFcJ8GJ9th6qeZH0ll8r7dE6HHaSuchJ
+          functionName: myFunction
 
 ```
+
+* [点击此处查看配置文档](https://github.com/serverless-tencent/tencent-apigateway/blob/master/docs/configure.md)
+
 
 ### 4. 部署
 
 通过如下命令进行部署，并查看部署过程中的信息
 ```console
-$ serverless --debug
+$ sls --debug
+
+  DEBUG ─ Resolving the template's static variables.
+  DEBUG ─ Collecting components from the template.
+  DEBUG ─ Downloading any NPM components found in the template.
+  DEBUG ─ Analyzing the template's components dependencies.
+  DEBUG ─ Creating the template's components graph.
+  DEBUG ─ Syncing template state.
+  DEBUG ─ Executing the template's components graph.
+  DEBUG ─ Starting API-Gateway deployment with name restApi in the ap-shanghai region
+  DEBUG ─ Service with ID service-g1ihx7c7 created.
+  DEBUG ─ API with id api-4dv8r7wg created.
+  DEBUG ─ Deploying service with id service-g1ihx7c7.
+  DEBUG ─ Deployment successful for the api named restApi in the ap-shanghai region.
+
+  restApi: 
+    protocol:    http
+    subDomain:   service-g1ihx7c7-1300415943.ap-shanghai.apigateway.myqcloud.com
+    environment: release
+    region:      ap-shanghai
+    serviceId:   service-g1ihx7c7
+    apis: 
+      - 
+        path:   /users
+        method: POST
+        apiId:  api-4dv8r7wg
+
+  24s › restApi › done
+
 ```
 
 ### 5. 移除
 
 通过以下命令移除部署的API网关
 ```console
-$ serverless remove --debug
-```
+$ sls remove --debug
 
-### 测试案例
-```text
-tongtingting:tencent-apigateway tongtingting$ sls
+  DEBUG ─ Flushing template state and removing all components.
+  DEBUG ─ Removing any previously deployed API. api-4dv8r7wg
+  DEBUG ─ Removing any previously deployed service. service-g1ihx7c7
 
-restApi: 
-    protocol:      HTTP
-    serviceId:     service-********
-    subDomain:     service-********-**********.ap-guangzhou.apigateway.myqcloud.com
-    requestConfig: 
-      path:   /frontend/path
-      method: GET
-    identity: 
-      secretIds: 
-        - AKID************************
-
-  16s › restApi › done
-  
-tongtingting:tencent-api-gateway tongtingting$ sls remove
-
-  19s › restApi › done
+  13s › restApi › done
 
 ```
+
 ### 还支持哪些组件？
 
 可以在 [Serverless Components](https://github.com/serverless/components) repo 中查询更多组件的信息。
