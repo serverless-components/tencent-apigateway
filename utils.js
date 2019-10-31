@@ -378,7 +378,9 @@ const UnBindSecretIds = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(new HttpError(data.code, data.message))
+          if (CheckExistsFromError(data)) {
+            return reject(new HttpError(data.code, data.message))
+          }
         }
         resolve(data)
       }
@@ -397,7 +399,9 @@ const UnBindEnvironment = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(new HttpError(data.code, data.message))
+          if (CheckExistsFromError(data)) {
+            return reject(new HttpError(data.code, data.message))
+          }
         }
         resolve(data)
       }
@@ -416,7 +420,9 @@ const DeleteUsagePlan = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(new HttpError(data.code, data.message))
+          if (CheckExistsFromError(data)) {
+            return reject(new HttpError(data.code, data.message))
+          }
         }
         resolve(data)
       }
@@ -435,7 +441,9 @@ const DeleteApiKey = ({ apig, ...inputs }) => {
         if (err) {
           return reject(err)
         } else if (data.code !== 0) {
-          return reject(new HttpError(data.code, data.message))
+          if (CheckExistsFromError(data)) {
+            return reject(new HttpError(data.code, data.message))
+          }
         }
         resolve(data)
       }
@@ -445,6 +453,9 @@ const DeleteApiKey = ({ apig, ...inputs }) => {
 
 const CheckExistsFromError = (err) => {
   if (err && err.message.match('does not exist')) {
+    return false
+  }
+  if (err && err.message.match('not found')) {
     return false
   }
   return true
