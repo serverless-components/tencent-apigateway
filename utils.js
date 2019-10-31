@@ -1,11 +1,10 @@
 const Joi = require('joi')
 
-
 function HttpError(code, message) {
   this.code = code || 0
   this.message = message || ''
 }
-HttpError.prototype = Error.prototype;
+HttpError.prototype = Error.prototype
 
 const CreateService = ({ apig, ...inputs }) => {
   return new Promise((resolve, reject) => {
@@ -516,26 +515,48 @@ const Validate = (config) => {
   }
 
   // Api returns a maximum of 100 rows of records at a time
-  const endpointsScheme = Joi.array().max(100).items(Joi.object().keys({
-    apiId: Joi.string().optional(),
-    description: Joi.string().max(200).optional(),
-    enableCORS: Joi.boolean().optional().default(true),
-    path: Joi.string().required(),
-    method: Joi.string().regex(/^(GET|POST|PUT|DELETE|HEAD|ANY)$/).required(),
-    function: Joi.object().keys({
-      isIntegratedResponse: Joi.boolean().optional().default(true),
-      functionQualifier: Joi.string().optional().default('$LATEST'),
-      functionName: Joi.string().required().error(new Error('"endpoints.function.functionName" is required'))
-    }).required(),
-    usagePlan: Joi.object().keys(usagePlanScheme),
-    auth: {
-      serviceTimeout: Joi.number().integer().optional().default(15),
-      secretName: Joi.string().required(),
-      // Api returns a maximum of 100 rows of records at a time
-      // https://cloud.tencent.com/document/product/628/14920
-      secretIds: Joi.array().max(100)
-    }
-  })).required()
+  const endpointsScheme = Joi.array()
+    .max(100)
+    .items(
+      Joi.object().keys({
+        apiId: Joi.string().optional(),
+        description: Joi.string()
+          .max(200)
+          .optional(),
+        enableCORS: Joi.boolean()
+          .optional()
+          .default(true),
+        path: Joi.string().required(),
+        method: Joi.string()
+          .regex(/^(GET|POST|PUT|DELETE|HEAD|ANY)$/)
+          .required(),
+        function: Joi.object()
+          .keys({
+            isIntegratedResponse: Joi.boolean()
+              .optional()
+              .default(true),
+            functionQualifier: Joi.string()
+              .optional()
+              .default('$LATEST'),
+            functionName: Joi.string()
+              .required()
+              .error(new Error('"endpoints.function.functionName" is required'))
+          })
+          .required(),
+        usagePlan: Joi.object().keys(usagePlanScheme),
+        auth: {
+          serviceTimeout: Joi.number()
+            .integer()
+            .optional()
+            .default(15),
+          secretName: Joi.string().required(),
+          // Api returns a maximum of 100 rows of records at a time
+          // https://cloud.tencent.com/document/product/628/14920
+          secretIds: Joi.array().max(100)
+        }
+      })
+    )
+    .required()
 
   const globalScheme = Joi.object()
     .keys({

@@ -32,9 +32,9 @@ const {
   ModifyService
 } = require('./utils')
 
-const serviceType    = 'SCF'
+const serviceType = 'SCF'
 const serviceTimeout = 15
-const bindType       = 'API'
+const bindType = 'API'
 
 class TencentApiGateway extends Component {
   async default(inputs = {}) {
@@ -71,7 +71,7 @@ class TencentApiGateway extends Component {
       Region: region,
       serviceDesc: description,
       // Up to 50 characters，(a-z,A-Z,0-9,_)
-      secretName: serviceName,
+      serviceName: serviceName,
       protocol: protocol.toLowerCase()
     }
 
@@ -153,12 +153,10 @@ class TencentApiGateway extends Component {
             }
           })
           if (!_.isEmpty(oldApi)) {
-            this.context.debug(
-              `Using last time deploy usage plan id ${oldApi.usagePlanId.value}.`
-            )
+            this.context.debug(`Using last time deploy usage plan id ${oldApi.usagePlanId.value}.`)
             usagePlan.usagePlanId = oldApi.usagePlanId.value
-            usagePlanId.created   = oldApi.usagePlanId.created
-            usagePlanId.value     = oldApi.usagePlanId.value
+            usagePlanId.created = oldApi.usagePlanId.created
+            usagePlanId.value = oldApi.usagePlanId.value
           }
         }
       }
@@ -266,21 +264,23 @@ class TencentApiGateway extends Component {
 
         for (let i = 0; i < len; i++) {
           const localSecretId = localSecretIds[i]
-          if (_.isUndefined(localSecretIdsState[localSecretId]))
+          if (_.isUndefined(localSecretIdsState[localSecretId])) {
             localSecretIdsState[localSecretId] = 0
+          }
 
           const findRet = _.find(onlineSecretIds, (onlineSecretIdObj) => {
-            if (localSecretId == onlineSecretIdObj.secretId)
+            if (localSecretId == onlineSecretIdObj.secretId) {
               return onlineSecretIdObj.secretId
+            }
           })
           if (findRet) {
             localSecretIdsState[localSecretId]++
             ctx.context.debug(`Usage plan ${usagePlanId} secret id ${localSecretId} already bound`)
-          } 
+          }
         }
       }
 
-      let total = result.totalCount 
+      let total = result.totalCount
       let offset = _.size(result.secretIdList)
 
       total -= offset
@@ -300,11 +300,11 @@ class TencentApiGateway extends Component {
         total -= _.size(resultPart.secretIdList)
       }
 
-
       const ids = []
       _.map(localSecretIdsState, (state, id) => {
-        if (state == 0) 
+        if (state == 0) {
           ids.push(id)
+        }
       })
       return ids
     }
@@ -372,7 +372,7 @@ class TencentApiGateway extends Component {
 
         if (!_.isEmpty(oldApi)) {
           endpoint.apiId = oldApi.apiId
-          
+
           this.context.debug(
             `Endpoint ${endpoint.method} ${endpoint.path} already exists with id ${oldApi.apiId}.`
           )
@@ -386,7 +386,7 @@ class TencentApiGateway extends Component {
             }
           })
           if (!_.isEmpty(localApi)) {
-            apiId.created  = localApi.apiId.created
+            apiId.created = localApi.apiId.created
           }
         }
       }
@@ -409,7 +409,13 @@ class TencentApiGateway extends Component {
       if (endpoint.auth) {
         const result = await apiAuthSetting(this, region, apig, endpoint)
         if (!_.isEmpty(result.secretIds.value)) {
-          const unboundSecretIds = await filterUsagePlanSecretId(this, apig, region, result.usagePlanId.value, result.secretIds.value)
+          const unboundSecretIds = await filterUsagePlanSecretId(
+            this,
+            apig,
+            region,
+            result.usagePlanId.value,
+            result.secretIds.value
+          )
           if (!_.isEmpty(unboundSecretIds)) {
             this.context.debug(
               `Binding secret key ${unboundSecretIds} to usage plan with id ${result.usagePlanId.value}.`
