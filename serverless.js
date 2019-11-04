@@ -75,6 +75,10 @@ class TencentApiGateway extends Component {
       protocol: protocol.toLowerCase()
     }
 
+    if (region == 'ap-beijing') {
+      serviceInputs.exclusiveSetName = 'APIGW-serverless-set3'
+    }
+
     let subDomain = ''
     let serviceCreated = true
 
