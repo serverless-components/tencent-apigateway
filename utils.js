@@ -11,6 +11,7 @@ const CreateService = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'CreateService',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -30,6 +31,7 @@ const DeleteService = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'DeleteService',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -49,6 +51,7 @@ const DescribeService = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'DescribeService',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -68,6 +71,7 @@ const CreateApi = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'CreateApi',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -87,6 +91,7 @@ const DescribeApi = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'DescribeApi',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -106,6 +111,7 @@ const DescribeApiUsagePlan = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'DescribeApiUsagePlan',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -125,6 +131,7 @@ const ModifyApi = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'ModifyApi',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -144,6 +151,7 @@ const ModifyService = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'ModifyService',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -163,6 +171,7 @@ const DescribeUsagePlanSecretIds = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'DescribeUsagePlanSecretIds',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -182,6 +191,7 @@ const DescribeUsagePlan = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'DescribeUsagePlan',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -201,6 +211,7 @@ const CreateUsagePlan = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'CreateUsagePlan',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -220,6 +231,7 @@ const ModifyUsagePlan = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'ModifyUsagePlan',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -239,6 +251,7 @@ const CreateApiKey = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'CreateApiKey',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -258,6 +271,7 @@ const DescribeApiKeysStatus = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'DescribeApiKeysStatus',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -277,6 +291,7 @@ const BindSecretIds = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'BindSecretIds',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -296,6 +311,7 @@ const BindEnvironment = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'BindEnvironment',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -315,6 +331,7 @@ const ReleaseService = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'ReleaseService',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -334,6 +351,7 @@ const UnReleaseService = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'UnReleaseService',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -353,6 +371,7 @@ const DeleteApi = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'DeleteApi',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -372,6 +391,7 @@ const UnBindSecretIds = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'UnBindSecretIds',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -393,6 +413,7 @@ const UnBindEnvironment = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'UnBindEnvironment',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -414,6 +435,7 @@ const DeleteUsagePlan = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'DeleteUsagePlan',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -435,6 +457,7 @@ const DeleteApiKey = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'DeleteApiKey',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -466,6 +489,7 @@ const DescribeApisStatus = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'DescribeApisStatus',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
@@ -485,6 +509,7 @@ const DisableApiKey = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'DisableApiKey',
+        RequestClient: 'ServerlessComponent',
         ...inputs
       },
       function(err, data) {
