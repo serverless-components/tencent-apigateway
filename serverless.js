@@ -350,7 +350,8 @@ class TencentApiGateway extends Component {
         enableCORS: endpoint.enableCORS ? 'TRUE' : 'FALSE',
         serviceType: serviceType,
         requestConfig: requestConfig,
-        serviceTimeout: serviceTimeout,
+        serviceTimeout: endpoint.serviceTimeout || 15,
+        responseType: endpoint.responseType || 'HTML',
         serviceScfFunctionName: endpoint.function.functionName,
         serviceScfIsIntegratedResponse: endpoint.function.isIntegratedResponse ? 'TRUE' : 'FALSE',
         serviceScfFunctionQualifier: endpoint.function.functionQualifier
@@ -358,6 +359,9 @@ class TencentApiGateway extends Component {
           : '$LATEST'
           ? endpoint.function.functionQualifier
           : '$LATEST'
+      }
+      if (endpoint.param) {
+        apiInputs.requestParameters = endpoint.param
       }
       const apiId = {
         value: null,

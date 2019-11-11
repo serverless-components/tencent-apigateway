@@ -19,11 +19,26 @@ restApi:
         method: POST
         function:
           functionName: myFunction
-      - path: /test
+      - path: /test/{abc}/{cde}
         apiId: api-id
         method: GET
         description: Serverless REST API
         enableCORS: TRUE
+        responseType: HTML
+        serviceTimeout: 10
+        param:
+          - name: abc
+            position: PATH
+            required: 'TRUE'
+            type: string
+            defaultValue: abc
+            desc: mytest
+          - name: cde
+            position: PATH
+            required: 'TRUE'
+            type: string
+            defaultValue: abc
+            desc: mytest
         function:
           isIntegratedResponse: TRUE
           functionQualifier: $LATEST
@@ -68,7 +83,9 @@ Main param description
 | function    | Required             |             | Serverless Cloud Function |
 | usagePlan    | Optional             |             |  |
 | auth    | Optional             |             | |
-
+| serviceTimeout         | Optional             |             | Service Timeout |
+| responseType         | Optional             |             |  ResponseType: HTML、JSON、TEST、BINARY、XML |
+| param        | Optional             |             | Param |
 
 * function param description
 
@@ -96,3 +113,15 @@ Main param description
 | serviceTimeout     |  Service timeout|
 | secretName        | User-defined secret key name. |
 | secretIds        | User-defined secretID, which is required when type is manual. It can contain 5 to 50 letters, digits, and underscores. |
+
+
+* param param description
+
+| Param        |  Description |
+| --------     |   :----      |
+| name     |  Name of the parameter in the request for calling the API from frontend.|
+| position        | Position of the parameter in the request for calling the API from frontend. Only PATH, QUERY and HEADER are supported. |
+| type        | Type of the parameter in the request for calling the API from frontend, such as String and int. |
+| defaultValue        | Default value of the parameter in the request for calling the API from frontend. |
+| required        | Indicates whether the parameter in the request for calling the API from frontend is required. 'TRUE': required; 'FALSE': optional. |
+| desc        | Description of the parameter in the request for calling the API from frontend. |
