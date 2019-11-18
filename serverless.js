@@ -1,5 +1,7 @@
 const Capi = require('qcloudapi-sdk')
+const TencentLogin = require('tencent-login')
 const _ = require('lodash')
+const fs = require('fs')
 const { Component } = require('@serverless/core')
 
 const {
@@ -37,17 +39,70 @@ const serviceTimeout = 15
 const bindType = 'API'
 
 class TencentApiGateway extends Component {
+  async doLogin() {
+    const login = new TencentLogin()
+    const tencent_credentials = await login.login()
+    if (tencent_credentials) {
+      tencent_credentials.timestamp = Date.now() / 1000
+      const tencent_credentials_json = JSON.stringify(tencent_credentials)
+      try {
+        const tencent = {
+          SecretId: tencent_credentials.tencent_secret_id,
+          SecretKey: tencent_credentials.tencent_secret_key,
+          AppId: tencent_credentials.tencent_appid,
+          token: tencent_credentials.tencent_token
+        }
+        await fs.writeFileSync('./.env_temp', tencent_credentials_json)
+        this.context.debug(
+          'The temporary key is saved successfully, and the validity period is two hours.'
+        )
+        return tencent
+      } catch (e) {
+        throw 'Error getting temporary key: ' + e
+      }
+    }
+  }
+
+  async getTempKey() {
+    const that = this
+    try {
+      const data = await fs.readFileSync('./.env_temp', 'utf8')
+      try {
+        const tencent = {}
+        const tencent_credentials_read = JSON.parse(data)
+        if (Date.now() / 1000 - tencent_credentials_read.timestamp <= 7000) {
+          tencent.SecretId = tencent_credentials_read.tencent_secret_id
+          tencent.SecretKey = tencent_credentials_read.tencent_secret_key
+          tencent.AppId = tencent_credentials_read.tencent_appid
+          tencent.token = tencent_credentials_read.tencent_token
+          return tencent
+        }
+        return await that.doLogin()
+      } catch (e) {
+        return await that.doLogin()
+      }
+    } catch (e) {
+      return await that.doLogin()
+    }
+  }
+
   async default(inputs = {}) {
     this.context.status('Deploying')
-
+    let { tencent } = this.context.credentials
+    if (!tencent) {
+      tencent = await this.getTempKey(tencent)
+      this.context.credentials.tencent = tencent
+    }
+    if (!this.context.credentials.tencent.AppId) {
+      const appId = await this.getAppid(tencent)
+      this.context.credentials.tencent.AppId = appId.AppId
+    }
     inputs.apiName = this.id.split('Template.')[1]
-
     inputs.serviceName = inputs.serviceName ? inputs.serviceName : 'serverless'
-
     const params = Validate(inputs)
-    let {
+    let { serviceId } = params
+    const {
       region,
-      serviceId,
       description,
       serviceName,
       apiName,
@@ -60,11 +115,11 @@ class TencentApiGateway extends Component {
     this.context.debug(
       `Starting API-Gateway deployment with name ${apiName} in the ${region} region`
     )
-
     const apig = new Capi({
       SecretId: this.context.credentials.tencent.SecretId,
       SecretKey: this.context.credentials.tencent.SecretKey,
-      serviceType: 'apigateway'
+      serviceType: 'apigateway',
+      Token: this.context.credentials.tencent.token
     })
 
     const serviceInputs = {
@@ -83,7 +138,11 @@ class TencentApiGateway extends Component {
     let serviceCreated = true
 
     if (serviceId) {
-      const serviceMsg = await DescribeService({ apig, Region: region, serviceId })
+      const serviceMsg = await DescribeService({
+        apig,
+        Region: region,
+        serviceId
+      })
       serviceCreated = false
       subDomain = serviceMsg.subDomain
     } else {
@@ -350,7 +409,7 @@ class TencentApiGateway extends Component {
         enableCORS: endpoint.enableCORS ? 'TRUE' : 'FALSE',
         serviceType: serviceType,
         requestConfig: requestConfig,
-        serviceTimeout: endpoint.serviceTimeout || 15,
+        serviceTimeout: endpoint.serviceTimeout || serviceTimeout,
         responseType: endpoint.responseType || 'HTML',
         serviceScfFunctionName: endpoint.function.functionName,
         serviceScfIsIntegratedResponse: endpoint.function.isIntegratedResponse ? 'TRUE' : 'FALSE',
@@ -516,10 +575,16 @@ class TencentApiGateway extends Component {
       this.context.debug(`Aborting removal. function name not found in state.`)
       return
     }
+    let { tencent } = this.context.credentials
+    if (!tencent) {
+      tencent = await this.getTempKey(tencent)
+      this.context.credentials.tencent = tencent
+    }
     const apig = new Capi({
       SecretId: this.context.credentials.tencent.SecretId,
       SecretKey: this.context.credentials.tencent.SecretKey,
-      serviceType: 'apigateway'
+      serviceType: 'apigateway',
+      Token: this.context.credentials.tencent.token
     })
 
     const state = this.state

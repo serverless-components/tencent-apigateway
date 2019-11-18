@@ -12,6 +12,7 @@ const CreateService = ({ apig, ...inputs }) => {
       {
         Action: 'CreateService',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -32,6 +33,7 @@ const DeleteService = ({ apig, ...inputs }) => {
       {
         Action: 'DeleteService',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -52,6 +54,7 @@ const DescribeService = ({ apig, ...inputs }) => {
       {
         Action: 'DescribeService',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -72,6 +75,7 @@ const CreateApi = ({ apig, ...inputs }) => {
       {
         Action: 'CreateApi',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -92,6 +96,7 @@ const DescribeApi = ({ apig, ...inputs }) => {
       {
         Action: 'DescribeApi',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -112,6 +117,7 @@ const DescribeApiUsagePlan = ({ apig, ...inputs }) => {
       {
         Action: 'DescribeApiUsagePlan',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -132,6 +138,7 @@ const ModifyApi = ({ apig, ...inputs }) => {
       {
         Action: 'ModifyApi',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -152,6 +159,7 @@ const ModifyService = ({ apig, ...inputs }) => {
       {
         Action: 'ModifyService',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -172,6 +180,7 @@ const DescribeUsagePlanSecretIds = ({ apig, ...inputs }) => {
       {
         Action: 'DescribeUsagePlanSecretIds',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -192,6 +201,7 @@ const DescribeUsagePlan = ({ apig, ...inputs }) => {
       {
         Action: 'DescribeUsagePlan',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -212,6 +222,7 @@ const CreateUsagePlan = ({ apig, ...inputs }) => {
       {
         Action: 'CreateUsagePlan',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -232,6 +243,7 @@ const ModifyUsagePlan = ({ apig, ...inputs }) => {
       {
         Action: 'ModifyUsagePlan',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -252,6 +264,7 @@ const CreateApiKey = ({ apig, ...inputs }) => {
       {
         Action: 'CreateApiKey',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -272,6 +285,7 @@ const DescribeApiKeysStatus = ({ apig, ...inputs }) => {
       {
         Action: 'DescribeApiKeysStatus',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -292,6 +306,7 @@ const BindSecretIds = ({ apig, ...inputs }) => {
       {
         Action: 'BindSecretIds',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -312,6 +327,7 @@ const BindEnvironment = ({ apig, ...inputs }) => {
       {
         Action: 'BindEnvironment',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -332,6 +348,7 @@ const ReleaseService = ({ apig, ...inputs }) => {
       {
         Action: 'ReleaseService',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -352,6 +369,7 @@ const UnReleaseService = ({ apig, ...inputs }) => {
       {
         Action: 'UnReleaseService',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -372,6 +390,7 @@ const DeleteApi = ({ apig, ...inputs }) => {
       {
         Action: 'DeleteApi',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -392,6 +411,7 @@ const UnBindSecretIds = ({ apig, ...inputs }) => {
       {
         Action: 'UnBindSecretIds',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -414,6 +434,7 @@ const UnBindEnvironment = ({ apig, ...inputs }) => {
       {
         Action: 'UnBindEnvironment',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -436,6 +457,7 @@ const DeleteUsagePlan = ({ apig, ...inputs }) => {
       {
         Action: 'DeleteUsagePlan',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -458,6 +480,7 @@ const DeleteApiKey = ({ apig, ...inputs }) => {
       {
         Action: 'DeleteApiKey',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -490,6 +513,7 @@ const DescribeApisStatus = ({ apig, ...inputs }) => {
       {
         Action: 'DescribeApisStatus',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
@@ -510,6 +534,7 @@ const DisableApiKey = ({ apig, ...inputs }) => {
       {
         Action: 'DisableApiKey',
         RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
         ...inputs
       },
       function(err, data) {
