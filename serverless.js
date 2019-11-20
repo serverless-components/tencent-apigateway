@@ -93,10 +93,6 @@ class TencentApiGateway extends Component {
       tencent = await this.getTempKey(tencent)
       this.context.credentials.tencent = tencent
     }
-    if (!this.context.credentials.tencent.AppId) {
-      const appId = await this.getAppid(tencent)
-      this.context.credentials.tencent.AppId = appId.AppId
-    }
     inputs.apiName = this.id.split('Template.')[1]
     inputs.serviceName = inputs.serviceName ? inputs.serviceName : 'serverless'
     const params = Validate(inputs)
