@@ -77,7 +77,7 @@ class TencentApiGateway extends Component {
         try {
           const tencent_credentials_read = JSON.parse(await fs.readFileSync('./.env_temp', 'utf8'))
           if (
-            Date.now() / 1000 - tencent_credentials_read.timestamp <= 5 &&
+            Date.now() / 1000 - tencent_credentials_read.timestamp <= 6000 &&
             tencent_credentials_read.AppId
           ) {
             return tencent_credentials_read
