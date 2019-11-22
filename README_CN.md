@@ -51,7 +51,6 @@ restApi:
 
 * [点击此处查看配置文档](https://github.com/serverless-tencent/tencent-apigateway/blob/master/docs/configure.md)
 
-
 ### 3. 部署
 
 如您的账号未[登陆](https://cloud.tencent.com/login)或[注册](https://cloud.tencent.com/register)腾讯云，您可以直接通过`微信`扫描命令行中的二维码进行授权登陆和注册。
