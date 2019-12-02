@@ -1,7 +1,7 @@
 {
   "name": "@serverless/tencent-apigateway",
   "description": "Tencent Cloud API Gateway",
-  "version": "1.9.10",
+  "version": "1.9.11",
   "main": "./serverless.js",
   "publishConfig": {
     "access": "public"

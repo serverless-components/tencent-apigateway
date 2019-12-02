@@ -174,7 +174,7 @@ class TencentApiGateway extends Component {
     }
 
     if (region == 'ap-beijing') {
-      serviceInputs.exclusiveSetName = 'APIGW-serverless-set3'
+      serviceInputs.exclusiveSetName = 'APIGW_FOR_SCF_SET1'
     }
 
     let subDomain = ''
