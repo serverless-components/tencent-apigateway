@@ -128,6 +128,10 @@ class TencentApiGateway extends Component {
     }
   }
 
+  getProtocolString(protocols) {
+    return protocols.join('&').toLowerCase()
+  }
+
   async default(inputs = {}) {
     // login
     const temp = this.context.instance.state.status
@@ -149,11 +153,13 @@ class TencentApiGateway extends Component {
       description,
       serviceName,
       apiName,
-      protocol,
+      protocols,
       usagePlan,
       environment,
       endpoints
     } = params
+
+    const protocol = this.getProtocolString(protocols)
 
     this.context.debug(
       `Starting API-Gateway deployment with name ${apiName} in the ${region} region`
@@ -170,7 +176,7 @@ class TencentApiGateway extends Component {
       serviceDesc: description,
       // Up to 50 characters，(a-z,A-Z,0-9,_)
       serviceName: serviceName,
-      protocol: protocol.toLowerCase()
+      protocol
     }
 
     if (region == 'ap-beijing') {
