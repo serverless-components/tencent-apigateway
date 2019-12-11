@@ -225,7 +225,7 @@ class TencentApiGateway extends Component {
     }
 
     const state = {
-      protocol: protocol,
+      protocols,
       subDomain: subDomain,
       environment: environment,
       region: region,
@@ -609,7 +609,7 @@ class TencentApiGateway extends Component {
     await this.save()
 
     return {
-      protocol,
+      protocols,
       subDomain,
       environment,
       region,
