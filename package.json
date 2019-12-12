@@ -1,13 +1,13 @@
 {
   "name": "@serverless/tencent-apigateway",
   "description": "Tencent Cloud API Gateway",
-  "version": "1.9.11",
+  "version": "2.0.0",
   "main": "./serverless.js",
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "tape *.test.js",
     "lint": "eslint . --fix --cache"
   },
   "author": "Tencent Cloud, Inc.",
@@ -25,6 +25,7 @@
     "eslint-config-prettier": "^3.6.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-prettier": "^3.0.1",
-    "prettier": "^1.15.3"
+    "prettier": "^1.15.3",
+    "tape": "^4.11.0"
   }
 }

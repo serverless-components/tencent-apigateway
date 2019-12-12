@@ -625,10 +625,10 @@ const Validate = (config) => {
         .optional()
         .default('ap-guangzhou'),
       serviceId: Joi.string().optional(),
-      protocol: Joi.string()
-        .regex(/^(http|https|http&https)$/)
+      protocols: Joi.array()
+        .items(Joi.string().regex(/^(http|https)$/))
         .optional()
-        .default('http'),
+        .default(['http']),
       serviceName: Joi.string()
         .min(2)
         .max(50)

@@ -26,18 +26,18 @@ $ npm install -g serverless
 Just create the following simple boilerplate:
 
 ```shell
-$ touch serverless.yml 
+$ touch serverless.yml
 $ touch .env           # your Tencent api keys
 ```
 
-Add the access keys of a [Tencent CAM Role](https://console.cloud.tencent.com/cam/capi) with `AdministratorAccess` in the `.env` file, using this format: 
+Add the access keys of a [Tencent CAM Role](https://console.cloud.tencent.com/cam/capi) with `AdministratorAccess` in the `.env` file, using this format:
 
 ```
 # .env
 TENCENT_SECRET_ID=XXX
 TENCENT_SECRET_KEY=XXX
 ```
-* If you don't have a Tencent Cloud account, you could [sign up](https://intl.cloud.tencent.com/register) first. 
+* If you don't have a Tencent Cloud account, you could [sign up](https://intl.cloud.tencent.com/register) first.
 
 ### 3. Configure
 
@@ -48,7 +48,9 @@ restApi:
   component: "@serverless/tencent-apigateway"
   inputs:
     region: ap-shanghai
-    protocol: http
+    protocols:
+      - http
+      - https
     serviceName: serverless
     environment: release
     endpoints:
@@ -79,14 +81,16 @@ $ sls --debug
   DEBUG ─ Deploying service with id service-g1ihx7c7.
   DEBUG ─ Deployment successful for the api named restApi in the ap-shanghai region.
 
-  restApi: 
-    protocol:    http
+  restApi:
+    protocols:
+      - http
+      - https
     subDomain:   service-g1ihx7c7-1300415943.ap-shanghai.apigateway.myqcloud.com
     environment: release
     region:      ap-shanghai
     serviceId:   service-g1ihx7c7
-    apis: 
-      - 
+    apis:
+      -
         path:   /users
         method: POST
         apiId:  api-4dv8r7wg

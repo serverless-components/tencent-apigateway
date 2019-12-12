@@ -38,7 +38,9 @@ restApi:
   component: "@serverless/tencent-apigateway"
   inputs:
     region: ap-shanghai
-    protocol: http
+    protocols:
+      - http
+      - https
     serviceName: serverless
     environment: release
     endpoints:
@@ -73,14 +75,16 @@ $ sls --debug
   DEBUG ─ Deploying service with id service-g1ihx7c7.
   DEBUG ─ Deployment successful for the api named restApi in the ap-shanghai region.
 
-  restApi: 
-    protocol:    http
+  restApi:
+    protocols:
+      - http
+      - https
     subDomain:   service-g1ihx7c7-1300415943.ap-shanghai.apigateway.myqcloud.com
     environment: release
     region:      ap-shanghai
     serviceId:   service-g1ihx7c7
-    apis: 
-      - 
+    apis:
+      -
         path:   /users
         method: POST
         apiId:  api-4dv8r7wg
