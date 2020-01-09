@@ -1,6 +1,5 @@
 const Capi = require('qcloudapi-sdk')
-// const tencentAuth = require('serverless-tencent-auth-tool')
-const tencentAuth = require('/Users/dfounderliu/Desktop/component/experience/serverless-tencent-auth-tool')
+const tencentAuth = require('serverless-tencent-auth-tool')
 const _ = require('lodash')
 const { Component } = require('@serverless/core')
 
