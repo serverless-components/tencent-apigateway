@@ -1,7 +1,7 @@
 const Capi = require('qcloudapi-sdk')
-const TencentLogin = require('tencent-login')
+// const tencentAuth = require('serverless-tencent-auth-tool')
+const tencentAuth = require('/Users/dfounderliu/Desktop/component/experience/serverless-tencent-auth-tool')
 const _ = require('lodash')
-const fs = require('fs')
 const { Component } = require('@serverless/core')
 
 const {
@@ -39,108 +39,14 @@ const serviceTimeout = 15
 const bindType = 'API'
 
 class TencentApiGateway extends Component {
-  async doLogin() {
-    const login = new TencentLogin()
-    const tencent_credentials = await login.login()
-    if (tencent_credentials) {
-      tencent_credentials.timestamp = Date.now() / 1000
-      try {
-        const tencent = {
-          SecretId: tencent_credentials.secret_id,
-          SecretKey: tencent_credentials.secret_key,
-          AppId: tencent_credentials.appid,
-          token: tencent_credentials.token,
-          expired: tencent_credentials.expired,
-          signature: tencent_credentials.signature,
-          uuid: tencent_credentials.uuid,
-          timestamp: tencent_credentials.timestamp
-        }
-        await fs.writeFileSync('./.env_temp', JSON.stringify(tencent))
-        return tencent
-      } catch (e) {
-        throw 'Error getting temporary key: ' + e
-      }
-    }
-  }
-
-  async sleep(ms) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, ms)
-    })
-  }
-
-  async getTempKey(temp) {
-    const that = this
-
-    if (temp) {
-      while (true) {
-        try {
-          const tencent_credentials_read = JSON.parse(await fs.readFileSync('./.env_temp', 'utf8'))
-          if (
-            Date.now() / 1000 - tencent_credentials_read.timestamp <= 6000 &&
-            tencent_credentials_read.AppId
-          ) {
-            return tencent_credentials_read
-          }
-          await that.sleep(1000)
-        } catch (e) {
-          await that.sleep(1000)
-        }
-      }
-    }
-
-    try {
-      const data = await fs.readFileSync('./.env_temp', 'utf8')
-      try {
-        const tencent = {}
-        const tencent_credentials_read = JSON.parse(data)
-        if (
-          Date.now() / 1000 - tencent_credentials_read.timestamp <= 6000 &&
-          tencent_credentials_read.AppId
-        ) {
-          return tencent_credentials_read
-        }
-        const login = new TencentLogin()
-        const tencent_credentials_flush = await login.flush(
-          tencent_credentials_read.uuid,
-          tencent_credentials_read.expired,
-          tencent_credentials_read.signature,
-          tencent_credentials_read.AppId
-        )
-        if (tencent_credentials_flush) {
-          tencent.SecretId = tencent_credentials_flush.secret_id
-          tencent.SecretKey = tencent_credentials_flush.secret_key
-          tencent.AppId = tencent_credentials_flush.appid
-          tencent.token = tencent_credentials_flush.token
-          tencent.expired = tencent_credentials_flush.expired
-          tencent.signature = tencent_credentials_flush.signature
-          tencent.uuid = tencent_credentials_read.uuid
-          tencent.timestamp = Date.now() / 1000
-          await fs.writeFileSync('./.env_temp', JSON.stringify(tencent))
-          return tencent
-        }
-        return await that.doLogin()
-      } catch (e) {
-        return await that.doLogin()
-      }
-    } catch (e) {
-      return await that.doLogin()
-    }
-  }
-
   getProtocolString(protocols) {
     return protocols.join('&').toLowerCase()
   }
 
   async default(inputs = {}) {
     // login
-    const temp = this.context.instance.state.status
-    this.context.instance.state.status = true
-    let { tencent } = this.context.credentials
-    if (!tencent) {
-      tencent = await this.getTempKey(temp)
-      this.context.credentials.tencent = tencent
-    }
+    const auth = new tencentAuth()
+    this.context.credentials.tencent = await auth.doAuth(this.context.credentials.tencent)
 
     this.context.status('Deploying')
 
@@ -465,8 +371,8 @@ class TencentApiGateway extends Component {
         serviceScfFunctionQualifier: endpoint.function.functionQualifier
           ? endpoint.function.functionQualifier
           : '$LATEST'
-            ? endpoint.function.functionQualifier
-            : '$LATEST'
+          ? endpoint.function.functionQualifier
+          : '$LATEST'
       }
       if (endpoint.param) {
         apiInputs.requestParameters = endpoint.param
@@ -620,13 +526,8 @@ class TencentApiGateway extends Component {
 
   async remove(inputs = {}) {
     // login
-    const temp = this.context.instance.state.status
-    this.context.instance.state.status = true
-    let { tencent } = this.context.credentials
-    if (!tencent) {
-      tencent = await this.getTempKey(temp)
-      this.context.credentials.tencent = tencent
-    }
+    const auth = new tencentAuth()
+    this.context.credentials.tencent = await auth.doAuth(this.context.credentials.tencent)
 
     this.context.status('Removing')
     if (!this.state.apis) {
