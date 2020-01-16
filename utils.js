@@ -105,7 +105,7 @@ const DescribeApi = ({ apig, ...inputs }) => {
         } else if (data.code !== 0) {
           return reject(new HttpError(data.code, data.message))
         }
-        resolve(data.apiId)
+        resolve(data)
       }
     )
   })
