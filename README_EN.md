@@ -1,5 +1,9 @@
 # tencent-apigateway
 
+&nbsp;
+
+- [请点击这里查看中文版部署文档](./README.md)
+
 Easily provision Tencent API Gateway using [Serverless Components](https://github.com/serverless/components).
 
 &nbsp;
