@@ -376,16 +376,13 @@ class TencentApiGateway extends Component {
         : '$LATEST'
 
       if (endpoint.protocol === 'WEBSOCKET') {
-        apiInputs.serviceWebsocketTransportFunctionName = funcName
-        // apiInputs.serviceWebsocketTransportFunctionNamespace =  "default"
+        apiInputs.serviceWebsocketTransportFunctionName = endpoint.function.transportFunctionName
         apiInputs.serviceWebsocketTransportFunctionQualifier = funcQualifier
 
-        apiInputs.serviceWebsocketRegisterFunctionName = funcName
-        // apiInputs.serviceWebsocketRegisterFunctionNamespace =  "default"
+        apiInputs.serviceWebsocketRegisterFunctionName = endpoint.function.registerFunctionName
         apiInputs.serviceWebsocketRegisterFunctionQualifier = funcQualifier
 
-        apiInputs.serviceWebsocketCleanupFunctionName = funcName
-        // apiInputs.serviceWebsocketCleanupFunctionNamespace =  "default"
+        apiInputs.serviceWebsocketCleanupFunctionName = endpoint.function.cleanupFunctionName
         apiInputs.serviceWebsocketCleanupFunctionQualifier = funcQualifier
       } else {
         apiInputs.serviceScfFunctionName = funcName
