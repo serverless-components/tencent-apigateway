@@ -376,6 +376,9 @@ class TencentApiGateway extends Component {
         : '$LATEST'
 
       if (endpoint.protocol === 'WEBSOCKET') {
+        if (!endpoint.function.transportFunctionName) {
+          throw new Error('"endpoints.function.transportFunctionName" is required')
+        }
         apiInputs.serviceWebsocketTransportFunctionName = endpoint.function.transportFunctionName
         apiInputs.serviceWebsocketTransportFunctionQualifier = funcQualifier
 
@@ -385,6 +388,9 @@ class TencentApiGateway extends Component {
         apiInputs.serviceWebsocketCleanupFunctionName = endpoint.function.cleanupFunctionName
         apiInputs.serviceWebsocketCleanupFunctionQualifier = funcQualifier
       } else {
+        if (!funcName) {
+          throw new Error('"endpoints.function.functionName" is required')
+        }
         apiInputs.serviceScfFunctionName = funcName
         ;(apiInputs.serviceScfIsIntegratedResponse = endpoint.function.isIntegratedResponse
           ? 'TRUE'
