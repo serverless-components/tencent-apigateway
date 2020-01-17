@@ -598,10 +598,7 @@ const Validate = (config) => {
               .default(false),
             functionQualifier: Joi.string()
               .optional()
-              .default('$LATEST'),
-            functionName: Joi.string()
-              .required()
-              .error(new Error('"endpoints.function.functionName" is required'))
+              .default('$LATEST')
           })
           .required(),
         usagePlan: Joi.object().keys(usagePlanScheme),
