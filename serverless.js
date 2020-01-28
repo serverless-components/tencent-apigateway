@@ -45,7 +45,7 @@ class TencentApiGateway extends Component {
   async default(inputs = {}) {
     // login
     const auth = new tencentAuth()
-    this.context.credentials.tencent = await auth.doAuth(this.context.credentials.tencent)
+    this.context.credentials.tencent = await auth.doAuth(this.context.credentials.tencent, 'tencent-apigateway')
 
     this.context.status('Deploying')
 
@@ -526,7 +526,7 @@ class TencentApiGateway extends Component {
   async remove(inputs = {}) {
     // login
     const auth = new tencentAuth()
-    this.context.credentials.tencent = await auth.doAuth(this.context.credentials.tencent)
+    this.context.credentials.tencent = await auth.doAuth(this.context.credentials.tencent, 'tencent-apigateway')
 
     this.context.status('Removing')
     if (!this.state.apis) {
