@@ -354,6 +354,7 @@ class TencentApiGateway extends Component {
       const api = requestConfig
 
       const apiInputs = {
+        protocol: endpoint.protocol,
         Region: region,
         serviceId: serviceId,
         apiName: apiName,
@@ -364,15 +365,39 @@ class TencentApiGateway extends Component {
         serviceType: serviceType,
         requestConfig: requestConfig,
         serviceTimeout: endpoint.serviceTimeout || serviceTimeout,
-        responseType: endpoint.responseType || 'HTML',
-        serviceScfFunctionName: endpoint.function.functionName,
-        serviceScfIsIntegratedResponse: endpoint.function.isIntegratedResponse ? 'TRUE' : 'FALSE',
-        serviceScfFunctionQualifier: endpoint.function.functionQualifier
-          ? endpoint.function.functionQualifier
-          : '$LATEST'
-          ? endpoint.function.functionQualifier
-          : '$LATEST'
+        responseType: endpoint.responseType || 'HTML'
       }
+
+      const funcName = endpoint.function.functionName
+      const funcQualifier = endpoint.function.functionQualifier
+        ? endpoint.function.functionQualifier
+        : '$LATEST'
+        ? endpoint.function.functionQualifier
+        : '$LATEST'
+
+      if (endpoint.protocol === 'WEBSOCKET') {
+        if (!endpoint.function.transportFunctionName) {
+          throw new Error('"endpoints.function.transportFunctionName" is required')
+        }
+        apiInputs.serviceWebsocketTransportFunctionName = endpoint.function.transportFunctionName
+        apiInputs.serviceWebsocketTransportFunctionQualifier = funcQualifier
+
+        apiInputs.serviceWebsocketRegisterFunctionName = endpoint.function.registerFunctionName
+        apiInputs.serviceWebsocketRegisterFunctionQualifier = funcQualifier
+
+        apiInputs.serviceWebsocketCleanupFunctionName = endpoint.function.cleanupFunctionName
+        apiInputs.serviceWebsocketCleanupFunctionQualifier = funcQualifier
+      } else {
+        if (!funcName) {
+          throw new Error('"endpoints.function.functionName" is required')
+        }
+        apiInputs.serviceScfFunctionName = funcName
+        ;(apiInputs.serviceScfIsIntegratedResponse = endpoint.function.isIntegratedResponse
+          ? 'TRUE'
+          : 'FALSE'),
+          (apiInputs.serviceScfFunctionQualifier = funcQualifier)
+      }
+
       if (endpoint.param) {
         apiInputs.requestParameters = endpoint.param
       }
@@ -416,11 +441,33 @@ class TencentApiGateway extends Component {
         apiId.value = await CreateApi({ apig, ...apiInputs })
         apiId.created = true
         this.context.debug(`API with id ${apiId.value} created.`)
+        // if websocket, get internalDemain by DescribeApi
+        if (endpoint.protocol === 'WEBSOCKET') {
+          const { internalDomain } = await DescribeApi({
+            apig,
+            serviceId,
+            apiId: apiId.value,
+            Region: region
+          })
+          apiId.internalDomain = internalDomain
+          output.internalDomain = internalDomain
+        }
       } else {
-        await DescribeApi({ apig, serviceId, apiId: endpoint.apiId, Region: region })
+        const { internalDomain } = await DescribeApi({
+          apig,
+          serviceId,
+          apiId: endpoint.apiId,
+          Region: region
+        })
+
         this.context.debug(`Updating api with api id ${endpoint.apiId}.`)
         await ModifyApi({ apig, apiId: endpoint.apiId, ...apiInputs })
         apiId.value = endpoint.apiId
+
+        if (endpoint.protocol === 'WEBSOCKET') {
+          apiId.internalDomain = internalDomain
+          output.internalDomain = internalDomain
+        }
         this.context.debug(`Service with id ${apiId.value} updated.`)
       }
 
