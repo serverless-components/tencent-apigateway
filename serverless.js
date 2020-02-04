@@ -45,7 +45,12 @@ class TencentApiGateway extends Component {
   async default(inputs = {}) {
     // login
     const auth = new tencentAuth()
-    this.context.credentials.tencent = await auth.doAuth(this.context.credentials.tencent, 'tencent-apigateway')
+    this.context.credentials.tencent = await auth.doAuth(this.context.credentials.tencent, {
+      client: 'tencent-apigateway',
+      remark: inputs.fromClientRemark,
+      project: this.context.instance ? this.context.instance.id : undefined,
+      action: 'default'
+    })
 
     this.context.status('Deploying')
 
@@ -98,7 +103,7 @@ class TencentApiGateway extends Component {
         serviceId
       })
       serviceCreated = false
-      subDomain = serviceMsg.subDomain
+      subDomain = { serviceMsg }
     } else {
       if (this.state && this.state.service && this.state.service.value) {
         serviceId = this.state.service.value
@@ -106,7 +111,7 @@ class TencentApiGateway extends Component {
         try {
           const serviceMsg = await DescribeService({ apig, Region: region, serviceId })
           // serviceCreated = false
-          subDomain = serviceMsg.subDomain
+          subDomain = { serviceMsg }
         } catch (e) {
           if (!CheckExistsFromError(e)) {
             this.context.debug(`Service ID ${serviceId} not found. Creating a new Service.`)
@@ -526,7 +531,12 @@ class TencentApiGateway extends Component {
   async remove(inputs = {}) {
     // login
     const auth = new tencentAuth()
-    this.context.credentials.tencent = await auth.doAuth(this.context.credentials.tencent, 'tencent-apigateway')
+    this.context.credentials.tencent = await auth.doAuth(this.context.credentials.tencent, {
+      client: 'tencent-apigateway',
+      remark: inputs.fromClientRemark,
+      project: this.context.instance ? this.context.instance.id : undefined,
+      action: 'remove'
+    })
 
     this.context.status('Removing')
     if (!this.state.apis) {
