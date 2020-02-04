@@ -359,7 +359,7 @@ class TencentApiGateway extends Component {
       const api = requestConfig
 
       const apiInputs = {
-        protocol: endpoint.protocol,
+        protocol: endpoint.protocol || 'HTTP',
         Region: region,
         serviceId: serviceId,
         apiName: apiName,
