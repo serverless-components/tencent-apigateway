@@ -105,7 +105,7 @@ const DescribeApi = ({ apig, ...inputs }) => {
         } else if (data.code !== 0) {
           return reject(new HttpError(data.code, data.message))
         }
-        resolve(data.apiId)
+        resolve(data)
       }
     )
   })
@@ -598,10 +598,7 @@ const Validate = (config) => {
               .default(false),
             functionQualifier: Joi.string()
               .optional()
-              .default('$LATEST'),
-            functionName: Joi.string()
-              .required()
-              .error(new Error('"endpoints.function.functionName" is required'))
+              .default('$LATEST')
           })
           .required(),
         usagePlan: Joi.object().keys(usagePlanScheme),

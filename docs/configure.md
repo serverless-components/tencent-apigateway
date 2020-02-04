@@ -17,6 +17,14 @@ restApi:
     description: the serverless service
     environment: release
     endpoints:
+      - path: /
+        method: GET
+        protocol: WEBSOCKET
+        function:
+          # for websocket type, transportFunctionName is required
+          transportFunctionName: myFunction
+          registerFunctionName: myFunction
+          cleanupFunctionName: myFunction
       - path: /users
         method: POST
         function:
@@ -76,6 +84,7 @@ Main param description
 | Param          | Required/Optional | Default | Description                                                                                         |
 | -------------- | :---------------: | :-----: | :-------------------------------------------------------------------------------------------------- |
 | apiId          |     Optional      |         | Unique ID of the API.                                                                               |
+| protocol       |     Optional      |         | Specify frontend api type, default `HTTP`, if you want to create websocket api, set to `WEBSOCKET`. |
 | path           |     Required      |         | Path.                                                                                               |
 | method         |     Required      |         | Request method.                                                                                     |
 | description    |     Optional      |         | Description                                                                                         |
