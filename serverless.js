@@ -103,7 +103,7 @@ class TencentApiGateway extends Component {
         serviceId
       })
       serviceCreated = false
-      subDomain = { serviceMsg }
+      subDomain = serviceMsg.subDomain
     } else {
       if (this.state && this.state.service && this.state.service.value) {
         serviceId = this.state.service.value
@@ -111,7 +111,7 @@ class TencentApiGateway extends Component {
         try {
           const serviceMsg = await DescribeService({ apig, Region: region, serviceId })
           // serviceCreated = false
-          subDomain = { serviceMsg }
+          subDomain = serviceMsg.subDomain
         } catch (e) {
           if (!CheckExistsFromError(e)) {
             this.context.debug(`Service ID ${serviceId} not found. Creating a new Service.`)
