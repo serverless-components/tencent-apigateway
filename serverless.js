@@ -374,6 +374,7 @@ class TencentApiGateway extends Component {
       }
 
       const funcName = endpoint.function.functionName
+      const funcNamespace = endpoint.function.functionNamespace || 'default'
       const funcQualifier = endpoint.function.functionQualifier
         ? endpoint.function.functionQualifier
         : '$LATEST'
@@ -397,6 +398,7 @@ class TencentApiGateway extends Component {
           throw new Error('"endpoints.function.functionName" is required')
         }
         apiInputs.serviceScfFunctionName = funcName
+        apiInputs.serviceScfFunctionNamespace = funcNamespace
         ;(apiInputs.serviceScfIsIntegratedResponse = endpoint.function.isIntegratedResponse
           ? 'TRUE'
           : 'FALSE'),
