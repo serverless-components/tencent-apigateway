@@ -30,7 +30,10 @@ const {
   CheckExistsFromError,
   DescribeApi,
   DescribeApisStatus,
-  ModifyService
+  ModifyService,
+  BindSubDomain,
+  UnBindSubDomain,
+  DescribeServiceSubDomains
 } = require('./utils')
 
 const serviceType = 'SCF'
@@ -341,7 +344,7 @@ class TencentApiGateway extends Component {
     })
 
     const apis = []
-    const outputs = []
+    const apiOutputs = []
     const len = endpoints.length
     for (let i = 0; i < len; i++) {
       const endpoint = endpoints[i]
@@ -561,20 +564,78 @@ class TencentApiGateway extends Component {
       )
 
       apis.push(api)
-      outputs.push(output)
+      apiOutputs.push(output)
     }
-    state.apis = apis
-    this.state = state
-    await this.save()
 
-    return {
+    // 1. unbind all custom domain
+    const { customDomain } = inputs
+    const customDomainDetail = await DescribeServiceSubDomains({
+      apig: apig,
+      Region: region,
+      serviceId
+    })
+    if (
+      customDomainDetail &&
+      customDomainDetail.domainSet &&
+      customDomainDetail.domainSet.length > 0
+    ) {
+      this.context.debug(`Start unbind all exist domain for service ${serviceId}`)
+      const { domainSet = [] } = customDomainDetail
+      // unbind all exist domain
+      for (let i = 0; i < domainSet.length; i++) {
+        const domainItem = domainSet[i]
+        await UnBindSubDomain({
+          apig: apig,
+          Region: region,
+          serviceId,
+          subDomain: domainItem.domainName
+        })
+      }
+    }
+    // 2. bind user config domain
+    const customDomainOutput = []
+    if (customDomain && customDomain.length > 0) {
+      this.context.debug(`Start bind custom domain for service ${serviceId}`)
+      for (let i = 0; i < customDomain.length; i++) {
+        const domainItem = customDomain[i]
+        const domainProtocol = domainItem.protocols
+          ? this.getProtocolString(domainItem.protocols)
+          : protocol
+        const domainInputs = {
+          apig: apig,
+          Region: region,
+          serviceId,
+          subDomain: domainItem.domain,
+          certificateId: domainItem.certificateId,
+          isDefaultMapping: domainItem.isDefaultMapping || 'TRUE',
+          pathMappingSet: domainItem.pathMappingSet || [],
+          protocol: domainProtocol
+        }
+        await BindSubDomain(domainInputs)
+        customDomainOutput.push(domainItem.domain)
+        this.context.debug(`Bind custom domain for service ${serviceId} success`)
+      }
+    }
+
+    const outputs = {
       protocols,
       subDomain,
       environment,
       region,
       serviceId,
-      apis: outputs
+      apis: apiOutputs
     }
+
+    if (customDomainOutput.length > 0) {
+      outputs.customDomains = customDomainOutput
+      state.customDomains = customDomainOutput
+    }
+
+    state.apis = apis
+    this.state = state
+    await this.save()
+
+    return outputs
   }
 
   async remove(inputs = {}) {
@@ -682,6 +743,18 @@ class TencentApiGateway extends Component {
         })
         this.context.debug(`Removing any previously deployed API. ${endpoint.apiId.value}`)
       }
+    }
+
+    // unbind all exist domain
+    const { customDomains = [] } = this.state
+    for (let i = 0; i < customDomains.length; i++) {
+      const domainItem = customDomains[i]
+      await UnBindSubDomain({
+        apig: apig,
+        Region: region,
+        serviceId: state.service.value,
+        subDomain: domainItem
+      })
     }
 
     await UnReleaseService({
