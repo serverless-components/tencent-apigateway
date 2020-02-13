@@ -6,6 +6,16 @@ function HttpError(code, message) {
 }
 HttpError.prototype = Error.prototype
 
+const CheckExistsFromError = (err) => {
+  if (err && err.message.match('does not exist')) {
+    return false
+  }
+  if (err && err.message.match('not found')) {
+    return false
+  }
+  return true
+}
+
 const CreateService = ({ apig, ...inputs }) => {
   return new Promise((resolve, reject) => {
     apig.request(
@@ -497,16 +507,6 @@ const DeleteApiKey = ({ apig, ...inputs }) => {
   })
 }
 
-const CheckExistsFromError = (err) => {
-  if (err && err.message.match('does not exist')) {
-    return false
-  }
-  if (err && err.message.match('not found')) {
-    return false
-  }
-  return true
-}
-
 const DescribeApisStatus = ({ apig, ...inputs }) => {
   return new Promise((resolve, reject) => {
     apig.request(
@@ -533,6 +533,90 @@ const DisableApiKey = ({ apig, ...inputs }) => {
     apig.request(
       {
         Action: 'DisableApiKey',
+        RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
+        ...inputs
+      },
+      function(err, data) {
+        if (err) {
+          return reject(err)
+        } else if (data.code !== 0) {
+          return reject(new HttpError(data.code, data.message))
+        }
+        resolve(data)
+      }
+    )
+  })
+}
+
+const BindSubDomain = ({ apig, ...inputs }) => {
+  return new Promise((resolve, reject) => {
+    apig.request(
+      {
+        Action: 'BindSubDomain',
+        RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
+        ...inputs
+      },
+      function(err, data) {
+        if (err) {
+          return reject(err)
+        } else if (data.code !== 0) {
+          return reject(new HttpError(data.code, data.message))
+        }
+        resolve(data)
+      }
+    )
+  })
+}
+
+const UnBindSubDomain = ({ apig, ...inputs }) => {
+  return new Promise((resolve, reject) => {
+    apig.request(
+      {
+        Action: 'UnBindSubDomain',
+        RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
+        ...inputs
+      },
+      function(err, data) {
+        if (err) {
+          return reject(err)
+        } else if (data.code !== 0) {
+          return reject(new HttpError(data.code, data.message))
+        }
+        resolve(data)
+      }
+    )
+  })
+}
+
+const ModifySubDomain = ({ apig, ...inputs }) => {
+  return new Promise((resolve, reject) => {
+    apig.request(
+      {
+        Action: 'ModifySubDomain',
+        RequestClient: 'ServerlessComponent',
+        Token: apig.defaults.Token || null,
+        ...inputs
+      },
+      function(err, data) {
+        if (err) {
+          return reject(err)
+        } else if (data.code !== 0) {
+          return reject(new HttpError(data.code, data.message))
+        }
+        resolve(data)
+      }
+    )
+  })
+}
+
+const DescribeServiceSubDomains = ({ apig, ...inputs }) => {
+  return new Promise((resolve, reject) => {
+    apig.request(
+      {
+        Action: 'DescribeServiceSubDomains',
         RequestClient: 'ServerlessComponent',
         Token: apig.defaults.Token || null,
         ...inputs
@@ -678,5 +762,9 @@ module.exports = {
   DescribeApi,
   DescribeUsagePlanSecretIds,
   DescribeApiUsagePlan,
-  CheckExistsFromError
+  CheckExistsFromError,
+  BindSubDomain,
+  UnBindSubDomain,
+  ModifySubDomain,
+  DescribeServiceSubDomains
 }
