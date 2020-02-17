@@ -612,8 +612,9 @@ class TencentApiGateway extends Component {
           protocol: domainProtocol
         }
         await BindSubDomain(domainInputs)
-        customDomainOutput.push(domainItem.domain)
-        this.context.debug(`Bind custom domain for service ${serviceId} success`)
+        customDomainOutput.push(`${domainItem.domain} (CNAME: ${subDomain}) `)
+        this.context.debug(`Custom domain for service ${serviceId} created successfullly.`)
+        this.context.debug(`Please add CNAME record ${subDomain} for ${domainItem.domain}.`)
       }
     }
 
