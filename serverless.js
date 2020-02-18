@@ -612,7 +612,10 @@ class TencentApiGateway extends Component {
           protocol: domainProtocol
         }
         await BindSubDomain(domainInputs)
-        customDomainOutput.push(`${domainItem.domain} (CNAME: ${subDomain}) `)
+        customDomainOutput.push({
+          domain: domainItem.domain,
+          cname: subDomain
+        })
         this.context.debug(`Custom domain for service ${serviceId} created successfullly.`)
         this.context.debug(`Please add CNAME record ${subDomain} for ${domainItem.domain}.`)
       }
@@ -754,7 +757,7 @@ class TencentApiGateway extends Component {
         apig: apig,
         Region: region,
         serviceId: state.service.value,
-        subDomain: domainItem
+        subDomain: domainItem.domain
       })
     }
 
