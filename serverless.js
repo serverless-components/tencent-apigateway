@@ -759,6 +759,7 @@ class TencentApiGateway extends Component {
         serviceId: state.service.value,
         subDomain: domainItem.domain
       })
+      this.context.debug(`Removing custom domain ${domainItem.domain}`)
     }
 
     await UnReleaseService({
