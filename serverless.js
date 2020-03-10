@@ -42,7 +42,8 @@ const bindType = 'API'
 
 class TencentApiGateway extends Component {
   getProtocolString(protocols) {
-    return protocols.join('&').toLowerCase()
+    const tempProtocol = protocols.join('&').toLowerCase()
+    return tempProtocol == 'https&http' ? 'http&https' : tempProtocol
   }
 
   async default(inputs = {}) {
