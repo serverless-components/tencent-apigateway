@@ -391,12 +391,15 @@ class TencentApiGateway extends Component {
         }
         apiInputs.serviceWebsocketTransportFunctionName = endpoint.function.transportFunctionName
         apiInputs.serviceWebsocketTransportFunctionQualifier = funcQualifier
+        apiInputs.serviceWebsocketTransportFunctionNamespace = funcNamespace
 
         apiInputs.serviceWebsocketRegisterFunctionName = endpoint.function.registerFunctionName
         apiInputs.serviceWebsocketRegisterFunctionQualifier = funcQualifier
+        apiInputs.serviceWebsocketRegisterFunctionNamespace = funcNamespace
 
         apiInputs.serviceWebsocketCleanupFunctionName = endpoint.function.cleanupFunctionName
         apiInputs.serviceWebsocketCleanupFunctionQualifier = funcQualifier
+        apiInputs.serviceWebsocketCleanupFunctionNamespace = funcNamespace
       } else {
         if (!funcName) {
           throw new Error('"endpoints.function.functionName" is required')
