@@ -583,17 +583,26 @@ class TencentApiGateway extends Component {
       customDomainDetail.domainSet &&
       customDomainDetail.domainSet.length > 0
     ) {
-      this.context.debug(`Start unbind all exist domain for service ${serviceId}`)
       const { domainSet = [] } = customDomainDetail
-      // unbind all exist domain
+      // unbind all created domain
+      const stateDomains = this.state.customDomains || []
+
       for (let i = 0; i < domainSet.length; i++) {
         const domainItem = domainSet[i]
-        await UnBindSubDomain({
-          apig: apig,
-          Region: region,
-          serviceId,
-          subDomain: domainItem.domainName
-        })
+        for (let j = 0; j < stateDomains.length; j++) {
+          // only list subDomain and created in state
+          if (stateDomains[j].domain === domainItem.domainName) {
+            this.context.debug(
+              `Start unbind previus domain ${domainItem.domainName} for service ${serviceId}`
+            )
+            await UnBindSubDomain({
+              apig: apig,
+              Region: region,
+              serviceId,
+              subDomain: domainItem.domainName
+            })
+          }
+        }
       }
     }
     // 2. bind user config domain
