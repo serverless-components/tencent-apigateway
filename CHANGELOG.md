@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.6](https://github.com/serverless-components/tencent-apigateway/compare/v2.1.4...v2.1.6) (2020-04-02)
+
+
+### Bug Fixes
+
+* unbind pre user domain bug ([e457508](https://github.com/serverless-components/tencent-apigateway/commit/e45750840ab1d86b09858812bb355c2092c9691a))
+
 ### [2.1.4](https://github.com/serverless-components/tencent-apigateway/compare/v2.1.1...v2.1.4) (2020-03-12)
 
 
