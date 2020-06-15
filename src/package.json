@@ -1,0 +1,10 @@
+{
+  "name": "@serverless/apigateway",
+  "description": "Easily provision Tencent API Gateway.",
+  "main": "serverless.js",
+  "author": "Tencent Cloud, Inc.",
+  "license": "MIT",
+  "dependencies": {
+    "tencent-component-toolkit": "^1.11.0"
+  }
+}
