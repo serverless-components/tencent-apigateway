@@ -17,6 +17,7 @@ Easily provision Tencent API Gateway using [Serverless Components](https://githu
 ### 1. Install
 
 Install the Serverless Framework:
+
 ```shell
 $ npm install -g serverless
 ```
@@ -37,7 +38,8 @@ Add the access keys of a [Tencent CAM Role](https://console.cloud.tencent.com/ca
 TENCENT_SECRET_ID=XXX
 TENCENT_SECRET_KEY=XXX
 ```
-* If you don't have a Tencent Cloud account, you could [sign up](https://intl.cloud.tencent.com/register) first.
+
+- If you don't have a Tencent Cloud account, you could [sign up](https://intl.cloud.tencent.com/register) first.
 
 ### 3. Configure
 
@@ -45,7 +47,7 @@ TENCENT_SECRET_KEY=XXX
 # serverless.yml
 
 restApi:
-  component: "@serverless/tencent-apigateway"
+  component: '@serverless/tencent-apigateway'
   inputs:
     region: ap-shanghai
     protocols:
@@ -60,8 +62,7 @@ restApi:
           functionName: myFunction
 ```
 
-* [Click here to view the configuration document](https://github.com/serverless-tencent/tencent-apigateway/blob/master/docs/configure.md)
-
+- [Click here to view the configuration document](https://github.com/serverless-tencent/tencent-apigateway/blob/master/docs/configure.md)
 
 ### 4. Deploy
 
@@ -102,6 +103,7 @@ $ sls --debug
 &nbsp;
 
 ### 5. Remove
+
 ```text
 $ sls remove --debug
 

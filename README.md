@@ -1,16 +1,16 @@
-# 腾讯云API网关组件
+# 腾讯云 API 网关组件
 
-&nbsp;
-
-* [请点击这里查看英文版部署文档](./README.en.md)
+- [请点击这里查看英文版部署文档](./README.en.md)
 
 ## 简介
-该组件是serverless-tencent组件库中的基础组件之一。通过API网关组件，可以快速，方便的创建，配置和管理腾讯云的API网关产品。
+
+该组件是 serverless-tencent 组件库中的基础组件之一。通过 API 网关组件，可以快速，方便的创建，配置和管理腾讯云的 API 网关产品。
 
 ## 快速开始
+
 &nbsp;
 
-通过API网关组件，对一个API服务/接口进行完整的创建，配置，部署和删除等操作。支持命令如下：
+通过 API 网关组件，对一个 API 服务/接口进行完整的创建，配置，部署和删除等操作。支持命令如下：
 
 1. [安装](#1-安装)
 2. [配置](#2-配置)
@@ -21,7 +21,7 @@
 
 ### 1. 安装
 
-通过npm安装serverless
+通过 npm 安装 serverless
 
 ```console
 $ npm install -g serverless
@@ -39,7 +39,7 @@ $ touch serverless.yml
 # serverless.yml
 
 restApi:
-  component: "@serverless/tencent-apigateway"
+  component: '@serverless/tencent-apigateway'
   inputs:
     region: ap-shanghai
     protocols:
@@ -52,10 +52,9 @@ restApi:
         method: POST
         function:
           functionName: myFunction
-
 ```
 
-* [点击此处查看配置文档](https://github.com/serverless-tencent/tencent-apigateway/blob/master/docs/configure.md)
+- [点击此处查看配置文档](https://github.com/serverless-tencent/tencent-apigateway/blob/master/docs/configure.md)
 
 ### 3. 部署
 
@@ -99,7 +98,8 @@ $ sls --debug
 
 ### 4. 移除
 
-通过以下命令移除部署的API网关
+通过以下命令移除部署的 API 网关
+
 ```console
 $ sls remove --debug
 
@@ -113,17 +113,17 @@ $ sls remove --debug
 
 ### 账号配置（可选）
 
-当前默认支持CLI扫描二维码登录，如您希望配置持久的环境变量/秘钥信息，也可以本地创建 `.env` 文件
+当前默认支持 CLI 扫描二维码登录，如您希望配置持久的环境变量/秘钥信息，也可以本地创建 `.env` 文件
 
 ```console
 $ touch .env # 腾讯云的配置信息
 ```
 
-在 `.env` 文件中配置腾讯云的SecretId和SecretKey信息并保存
+在 `.env` 文件中配置腾讯云的 SecretId 和 SecretKey 信息并保存
 
 如果没有腾讯云账号，可以在此[注册新账号](https://cloud.tencent.com/register)。
 
-如果已有腾讯云账号，可以在[API密钥管理](https://console.cloud.tencent.com/cam/capi)中获取 `SecretId` 和`SecretKey`.
+如果已有腾讯云账号，可以在[API 密钥管理](https://console.cloud.tencent.com/cam/capi)中获取 `SecretId` 和`SecretKey`.
 
 ```
 # .env
