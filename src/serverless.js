@@ -24,14 +24,49 @@ class ServerlessComponent extends Component {
     // get tencent cloud credentials
     const credentials = this.getCredentials()
 
-    const apigw = new Apigw(credentials)
+    const apigw = new Apigw(credentials, inputs.region)
 
     inputs.oldState = this.state
     const deployRes = await apigw.deploy(inputs)
     this.state = deployRes
 
-    // TODO: change to apigw outputs
-    const outputs = {}
+    const apiOutput = []
+    if (deployRes.apiList && deployRes.apiList.length > 0) {
+      deployRes.apiList.forEach((api) => {
+        const output = {
+          path: api.path,
+          method: api.method,
+          apiId: api.apiId,
+          internalDomain: api.internalDomain || undefined,
+          usagePlanId: api.usagePlan && api.usagePlan.usagePlanId,
+          secretIds:
+            api.usagePlan &&
+            api.usagePlan.secrets &&
+            api.usagePlan.secrets.secretIds.length > 0 &&
+            api.usagePlan.secrets.secretIds.join(',')
+        }
+        apiOutput.push(output)
+      })
+    }
+
+    const outputs = {
+      protocols: deployRes.protocols,
+      subDomain: deployRes.subDomain,
+      environment: deployRes.environment,
+      region: inputs.region,
+      serviceId: deployRes.serviceId,
+      apis: apiOutput
+    }
+
+    if (deployRes.customDomains && deployRes.customDomains.length > 0) {
+      outputs.customDomains = []
+      deployRes.customDomains.forEach((domain) => {
+        outputs.customDomains.push({
+          domain: domain.subDomain,
+          cname: domain.cname
+        })
+      })
+    }
 
     return outputs
   }
@@ -42,8 +77,9 @@ class ServerlessComponent extends Component {
     // get tencent cloud credentials
     const credentials = this.getCredentials()
 
-    const cdn = new Apigw(credentials)
-    await cdn.remove({ domain })
+    const { state } = this
+    const apigw = new Apigw(credentials, state.region)
+    await apigw.remove(state)
     this.state = {}
     return {}
   }
