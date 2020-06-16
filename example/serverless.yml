@@ -6,7 +6,7 @@ stage: dev
 
 inputs:
   region: ap-guangzhou
-  protocols: 
+  protocols:
     - http
     - https
   serviceName: 'sls_apigw_test'
@@ -23,4 +23,3 @@ inputs:
         usagePlanName: 'slsgw_usageplan_index'
         usagePlanDesc: 'slsgw usage plan test'
         maxRequestNum: 1000
-  
