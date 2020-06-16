@@ -1,0 +1,26 @@
+component: apigateway
+name: apigwDemo
+org: orgDemo
+app: appDemo
+stage: dev
+
+inputs:
+  region: ap-guangzhou
+  protocols: 
+    - http
+    - https
+  serviceName: 'sls_apigw_test'
+  environment: release
+  endpoints:
+    - path: /
+      protocol: HTTP
+      method: GET
+      apiName: index
+      function:
+        functionName: myRestAPI
+      usagePlan:
+        # usagePlanId: 'usagePlan-gulpv8oa'
+        usagePlanName: 'slsgw_usageplan_index'
+        usagePlanDesc: 'slsgw usage plan test'
+        maxRequestNum: 1000
+  
