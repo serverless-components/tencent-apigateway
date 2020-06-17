@@ -5,76 +5,80 @@
 ```yml
 # serverless.yml
 
-restApi:
-  component: '@serverless/tencent-apigateway'
-  inputs:
-    serviceId: service-8dsikiq6
-    region: ap-shanghai
-    protocols:
-      - http
-      - https
-    serviceName: serverless
-    description: the serverless service
-    environment: release
-    customDomain:
-      - domain: abc.com
-        # if you want add https, set cettificateId in tencent cloud ssl certificate
-        certificateId: abcdefg
-        # if you want to set custom path map, set to 'FALSE' string, not boolean FALSE
-        isDefaultMapping: 'FALSE'
-        pathMappingSet:
-          - path: /
-            environment: release
-        protocols:
-          - http
-          - https
-    endpoints:
-      - path: /
-        method: GET
-        protocol: WEBSOCKET
-        function:
-          # for websocket type, transportFunctionName is required
-          transportFunctionName: myFunction
-          registerFunctionName: myFunction
-          cleanupFunctionName: myFunction
-      - path: /users
-        method: POST
-        function:
-          functionName: myFunction
-      - path: /test/{abc}/{cde}
-        apiId: api-id
-        method: GET
-        description: Serverless REST API
-        enableCORS: TRUE
-        responseType: HTML
-        serviceTimeout: 10
-        param:
-          - name: abc
-            position: PATH
-            required: 'TRUE'
-            type: string
-            defaultValue: abc
-            desc: mytest
-          - name: cde
-            position: PATH
-            required: 'TRUE'
-            type: string
-            defaultValue: abc
-            desc: mytest
-        function:
-          isIntegratedResponse: TRUE
-          functionQualifier: $LATEST
-          functionName: myFunction
-        usagePlan:
-          usagePlanId: 1111
-          usagePlanName: slscmp
-          usagePlanDesc: sls create
-          maxRequestNum: 1000
-        auth:
-          serviceTimeout: 15
-          secretName: secret
-          secretIds:
-            - AKIDNSdvdFcJ8GJ9th6qeZH0ll8r7dE6HHaSuchJ
+component: apigateway # (required) component name, this one is apigateway
+name: apigwDemo # (required) instance name
+org: orgDemo # (optional) for record organizational info, default value is your tencent cloud account appid
+app: appDemo # (optional) this application name
+stage: dev # (optional) for different env info, default: dev
+
+inputs:
+  serviceId: service-8dsikiq6
+  region: ap-shanghai
+  protocols:
+    - http
+    - https
+  serviceName: serverless
+  description: the serverless service
+  environment: release
+  customDomain:
+    - domain: abc.com
+      # if you want add https, set cettificateId in tencent cloud ssl certificate
+      certificateId: abcdefg
+      # if you want to set custom path map, set to 'FALSE' string, not boolean FALSE
+      isDefaultMapping: 'FALSE'
+      pathMappingSet:
+        - path: /
+          environment: release
+      protocols:
+        - http
+        - https
+  endpoints:
+    - path: /
+      method: GET
+      protocol: WEBSOCKET
+      function:
+        # for websocket type, transportFunctionName is required
+        transportFunctionName: myFunction
+        registerFunctionName: myFunction
+        cleanupFunctionName: myFunction
+    - path: /users
+      method: POST
+      function:
+        functionName: myFunction
+    - path: /test/{abc}/{cde}
+      apiId: api-id
+      method: GET
+      description: Serverless REST API
+      enableCORS: TRUE
+      responseType: HTML
+      serviceTimeout: 10
+      param:
+        - name: abc
+          position: PATH
+          required: 'TRUE'
+          type: string
+          defaultValue: abc
+          desc: mytest
+        - name: cde
+          position: PATH
+          required: 'TRUE'
+          type: string
+          defaultValue: abc
+          desc: mytest
+      function:
+        isIntegratedResponse: TRUE
+        functionQualifier: $LATEST
+        functionName: myFunction
+      usagePlan:
+        usagePlanId: 1111
+        usagePlanName: slscmp
+        usagePlanDesc: sls create
+        maxRequestNum: 1000
+      auth:
+        serviceTimeout: 15
+        secretName: secret
+        secretIds:
+          - AKIDNSdvdFcJ8GJ9th6qeZH0ll8r7dE6HHaSuchJ
 ```
 
 ## Configuration description

@@ -1,6 +1,6 @@
 # 腾讯云 API 网关组件
 
-- [请点击这里查看英文版部署文档](./README.en.md)
+简体中文 ｜ [English](./README.en.md)
 
 ## 简介
 
@@ -23,7 +23,7 @@
 
 通过 npm 安装 serverless
 
-```console
+```bash
 $ npm install -g serverless
 ```
 
@@ -31,30 +31,36 @@ $ npm install -g serverless
 
 本地创建 `serverless.yml` 文件，在其中进行如下配置
 
-```console
+```bash
 $ touch serverless.yml
 ```
 
 ```yml
 # serverless.yml
 
-restApi:
-  component: '@serverless/tencent-apigateway'
-  inputs:
-    region: ap-shanghai
-    protocols:
-      - http
-      - https
-    serviceName: serverless
-    environment: release
-    endpoints:
-      - path: /users
-        method: POST
-        function:
-          functionName: myFunction
+component: apigateway # (必填) 组件名称，此处为nextjs
+name: apigwDemo # (必填) 实例名称
+org: orgDemo # (可选) 用于记录组织信息，默认值为您的腾讯云账户 appid
+app: appDemo # (可选) 该 next.js 应用名称
+stage: dev # (可选) 用于区分环境信息，默认值是 dev
+
+inputs:
+  region: ap-guangzhou
+  protocols:
+    - http
+    - https
+  serviceName: serverless
+  environment: release
+  endpoints:
+    - path: /
+      protocol: HTTP
+      method: GET
+      apiName: index
+      function:
+        functionName: myFunction
 ```
 
-- [点击此处查看配置文档](https://github.com/serverless-tencent/tencent-apigateway/blob/master/docs/configure.md)
+- [点击此处查看配置文档](./docs/configure.md)
 
 ### 3. 部署
 
@@ -62,60 +68,23 @@ restApi:
 
 通过`sls`命令进行部署，并可以添加`--debug`参数查看部署过程中的信息
 
-```console
-$ sls --debug
-
-  DEBUG ─ Resolving the template's static variables.
-  DEBUG ─ Collecting components from the template.
-  DEBUG ─ Downloading any NPM components found in the template.
-  DEBUG ─ Analyzing the template's components dependencies.
-  DEBUG ─ Creating the template's components graph.
-  DEBUG ─ Syncing template state.
-  DEBUG ─ Executing the template's components graph.
-  DEBUG ─ Starting API-Gateway deployment with name restApi in the ap-shanghai region
-  DEBUG ─ Service with ID service-g1ihx7c7 created.
-  DEBUG ─ API with id api-4dv8r7wg created.
-  DEBUG ─ Deploying service with id service-g1ihx7c7.
-  DEBUG ─ Deployment successful for the api named restApi in the ap-shanghai region.
-
-  restApi:
-    protocols:
-      - http
-      - https
-    subDomain:   service-g1ihx7c7-1300415943.ap-shanghai.apigateway.myqcloud.com
-    environment: release
-    region:      ap-shanghai
-    serviceId:   service-g1ihx7c7
-    apis:
-      -
-        path:   /users
-        method: POST
-        apiId:  api-4dv8r7wg
-
-  24s › restApi › done
-
+```bash
+$ sls deploy
 ```
 
 ### 4. 移除
 
 通过以下命令移除部署的 API 网关
 
-```console
-$ sls remove --debug
-
-  DEBUG ─ Flushing template state and removing all components.
-  DEBUG ─ Removing any previously deployed API. api-4dv8r7wg
-  DEBUG ─ Removing any previously deployed service. service-g1ihx7c7
-
-  13s › restApi › done
-
+```bash
+$ sls remove
 ```
 
 ### 账号配置（可选）
 
 当前默认支持 CLI 扫描二维码登录，如您希望配置持久的环境变量/秘钥信息，也可以本地创建 `.env` 文件
 
-```console
+```bash
 $ touch .env # 腾讯云的配置信息
 ```
 
