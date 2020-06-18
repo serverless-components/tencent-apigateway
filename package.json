@@ -1,6 +1,6 @@
 {
   "name": "@serverless/apigateway",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "src/serverless.js",
   "publishConfig": {
     "access": "public"

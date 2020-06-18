@@ -5,6 +5,6 @@
   "author": "Tencent Cloud, Inc.",
   "license": "MIT",
   "dependencies": {
-    "tencent-component-toolkit": "^1.11.2"
+    "tencent-component-toolkit": "^1.11.4"
   }
 }
