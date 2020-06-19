@@ -79,6 +79,13 @@ inputs:
         secretName: secret
         secretIds:
           - AKIDNSdvdFcJ8GJ9th6qeZH0ll8r7dE6HHaSuchJ
+    # Refer to https://cloud.tencent.com/document/product/628/45243 for more parameter configuration
+    - path: /helloworld
+      method: GET
+      description: Demo for MOCK Mode.Can be used in such as wechat public platform background domain name verification... 
+      enableCORS: FALSE
+      serviceType: MOCK
+      serviceMockReturnMessage: Hello There!
 ```
 
 ## Configuration description
@@ -112,6 +119,8 @@ Main param description
 | serviceTimeout |     Optional      |         | Service Timeout                                                                                     |
 | responseType   |     Optional      |         | ResponseType: HTML、JSON、TEST、BINARY、XML                                                         |
 | param          |     Optional      |         | Param                                                                                               |
+| serviceType    |     Optional      |         | Set to `MOCK` only if you want to response by mock                     |
+| serviceMockReturnMessage    |     Optional      |         | Mock response string. Required if serviceType set to Mock            |
 
 - function param description
 

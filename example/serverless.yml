@@ -12,6 +12,12 @@ inputs:
   serviceName: 'sls_apigw_test'
   environment: release
   endpoints:
+    - path: /helloworld
+      method: GET
+      description: Demo for MOCK Mode.Can be used in such as wechat public platform background domain name verification... 
+      enableCORS: FALSE
+      serviceType: MOCK
+      serviceMockReturnMessage: Hello There!
     - path: /
       protocol: HTTP
       method: GET
