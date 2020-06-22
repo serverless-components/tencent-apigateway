@@ -1,12 +1,14 @@
 const { Component } = require('@serverless/core')
 const { Apigw } = require('tencent-component-toolkit')
+const { TypeError } = require('tencent-component-toolkit/src/utils/error')
 
 class ServerlessComponent extends Component {
   getCredentials() {
     const { tmpSecrets } = this.credentials.tencent
 
     if (!tmpSecrets || !tmpSecrets.TmpSecretId) {
-      throw new Error(
+      throw new TypeError(
+        'CREDENTIAL',
         'Cannot get secretId/Key, your account could be sub-account and does not have the access to use SLS_QcsRole, please make sure the role exists first, then visit https://cloud.tencent.com/document/product/1154/43006, follow the instructions to bind the role to your account.'
       )
     }
