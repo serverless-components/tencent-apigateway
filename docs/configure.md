@@ -117,8 +117,8 @@ inputs:
 | serviceName                           |   可选    |        | 用户自定义的服务名称。 如果该参数未传递，则由系统自动生成一个唯一名称                  |
 | description                           |   可选    |        | 用户自定义的服务描述说明                                                               |
 | environment                           |   必填    |        | 服务要发布的环境的名称，支持三种环境: test（测试）、prepub（预发布）、 release（发布） |
-| [endpoints](#API参数说明)             |   必填    |        | API                                                                                    |
-| [customDomain](#customDomain参数说明) |   可选    |   []   | 自定义 API 域名                                                                        |
+| [endpoints](#API-参数说明)             |   必填    |        | API                                                                                    |
+| [customDomain](#customDomain-参数说明) |   可选    |   []   | 自定义 API 域名                                                                        |
 
 ### API 参数说明
 
