@@ -41,10 +41,15 @@ inputs:
         transportFunctionName: myFunction
         registerFunctionName: myFunction
         cleanupFunctionName: myFunction
-    - path: /users
-      method: POST
-      function:
-        functionName: myFunction
+    - path: /ws
+      protocol: WEBSOCKET
+      apiName: 'test-ws'
+      method: GET
+      serviceType: WEBSOCKET
+      serviceConfig:
+        url: 'ws://www.test.com'
+        path: /
+        method: GET
     - path: /test/{abc}/{cde}
       apiId: api-id
       method: GET
@@ -79,6 +84,21 @@ inputs:
         secretName: secret
         secretIds:
           - AKIDNSdvdFcJ8GJ9th6qeZH0ll8r7dE6HHaSuchJ
+    - path: /mo
+      protocol: HTTP
+      method: GET
+      apiName: 'mock-api'
+      serviceType: MOCK
+      serviceMockReturnMessage: 'mock response content'
+    - path: /rest
+      protocol: HTTP
+      apiName: 'test-http'
+      method: GET
+      serviceType: HTTP
+      serviceConfig:
+        url: 'http://www.test.com'
+        path: /test
+        method: GET
 ```
 
 ## Configuration description
