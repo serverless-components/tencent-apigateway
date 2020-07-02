@@ -107,18 +107,18 @@ inputs:
 
 ## 配置说明
 
-主要函数说明
+### 主要函数说明
 
-| 参数                                   | 必填/可选 | 默认值 | 描述                                                                                   |
-| -------------------------------------- | :-------: | :----: | :------------------------------------------------------------------------------------- |
-| serviceId                              |   可选    |        | 服务的全局唯一 ID，由系统生成                                                          |
-| region                                 |   必填    |        | 服务的部署区域，默认为广州（ap-guangzhou）                                             |
-| protocols                              |   必填    |        | 服务的前端请求类型，例如 HTTP，HTTPS，HTTP 和 HTTPS。 （http / https）                 |
-| serviceName                            |   可选    |        | 用户自定义的服务名称。 如果该参数未传递，则由系统自动生成一个唯一名称                  |
-| description                            |   可选    |        | 用户自定义的服务描述说明                                                               |
-| environment                            |   必填    |        | 服务要发布的环境的名称，支持三种环境: test（测试）、prepub（预发布）、 release（发布） |
-| [endpoints](#API-参数说明)             |   必填    |        | API                                                                                    |
-| [customDomain](#customDomain-参数说明) |   可选    |   []   | 自定义 API 域名                                                                        |
+| 参数         | 必填/可选 |     默认值     | 描述                                                                                   |
+| ------------ | :-------: | :------------: | :------------------------------------------------------------------------------------- |
+| serviceId    |   可选    |                | 服务的全局唯一 ID，由系统生成                                                          |
+| region       |   必填    | `ap-guangzhou` | 服务的部署区域，默认为广州（ap-guangzhou）                                             |
+| protocols    |   必填    |                | 服务的前端请求类型，例如 HTTP，HTTPS，HTTP 和 HTTPS。 （http / https）                 |
+| serviceName  |   可选    |                | 用户自定义的服务名称。 如果该参数未传递，则由系统自动生成一个唯一名称                  |
+| description  |   可选    |                | 用户自定义的服务描述说明                                                               |
+| environment  |   必填    |                | 服务要发布的环境的名称，支持三种环境: test（测试）、prepub（预发布）、 release（发布） |
+| endpoints    |   必填    |                | API，配置参数参考[API 参数说明](#api-参数说明)                                         |
+| customDomain |   可选    |      `[]`      | 自定义 API 域名，配置参数参考[customDomain 参数说明](#customdomain-参数说明)           |
 
 ### API 参数说明
 
@@ -131,13 +131,13 @@ inputs:
 | serviceType    |   可选    |  `SCF`  | 指定的后端类型，默认为 `SCF`，如要创建 mock 或 http 的类型，可设为 `MOCK`或`HTTP`    |
 | description    |   可选    |         | API 描述                                                                             |
 | enableCORS     |   可选    | `FALSE` | 是否启用跨域访问。 TRUE：启用， FALSE：不启用， 默认为 FALSE                         |
-| function       |   必填    |         | 对应的 Serverless 云函数（后端类型为`SCF`时生效且必填）                              |
-| usagePlan      |   可选    |         | 基于 API 维度的使用计划                                                              |
-| auth           |   可选    |         | API 鉴权设置                                                                         |
+| function       |   必填    |         | 对应的 Serverless 云函数，配置参数参考[function 参数说明](#function-参数说明)        |
+| usagePlan      |   可选    |         | 基于 API 维度的使用计划，配置参数参考[usagePlan 参数说明](#usageplan-参数说明)       |
+| auth           |   可选    |         | API 鉴权设置，配置参数参考[auth 参数说明](#auth-参数说明)                            |
 | serviceTimeout |   可选    |         | API 的后端服务超时时间，单位为秒                                                     |
 | responseType   |   可选    |         | 返回类型: HTML、JSON、TEST、BINARY、XML                                              |
-| param          |   可选    |         | 前端请求参数                                                                         |
-| serviceConfig  |   可选    |         | API 的后端服务配置（后端类型为`HTTP`或`WEBSOCKET`时生效且必填）                      |
+| param          |   可选    |         | 前端请求参数，配置参数参考[param 参数说明](#param-参数说明)                          |
+| serviceConfig  |   可选    |         | API 的后端服务配置，配置参数参考[serviceConfig 参数说明](#serviceconfig-参数说明)    |
 
 - API 类型补充说明
 
@@ -149,7 +149,9 @@ inputs:
 | WEBSOCKET                     | SCF (默认)                      |
 |                               | WEBSOCKET                       |
 
-- function 参数说明（当后端类型为`SCF`时生效）
+### function 参数说明
+
+> （当后端类型为`SCF`时生效且必填）
 
 | 参数                  | 描述                                                                  |
 | --------------------- | :-------------------------------------------------------------------- |
@@ -160,7 +162,9 @@ inputs:
 | registerFunctionName  | API 的后端服务的注册函数的名称，当前端类型为`WEBSOCKET`时生效         |
 | cleanupFunctionName   | API 的后端服务的清理函数的名称，当前端类型为`WEBSOCKET`时生效         |
 
-- serviceConfig 参数说明（当后端类型为`HTTP`或`WEBSOCKET`时生效）
+### serviceConfig 参数说明
+
+> （当后端类型为`HTTP`或`WEBSOCKET`时生效且必填）
 
 | 参数   | 描述                   |
 | ------ | :--------------------- |
@@ -168,7 +172,7 @@ inputs:
 | path   | API 的后端服务路径     |
 | method | API 的后端服务请求方法 |
 
-- usagePlan 参数说明
+### usagePlan 参数说明
 
 | 参数          | 描述                                                                                       |
 | ------------- | :----------------------------------------------------------------------------------------- |
@@ -177,14 +181,14 @@ inputs:
 | usagePlanDesc | 用户自定义的基于 API 的使用计划描述                                                        |
 | maxRequestNum | 允许的请求总数。不传该参数时默认为 1000 次，若其保留为空，则默认情况下将使用-1，表示已禁用 |
 
-- auth 参数说明
+### auth 参数说明
 
 | 参数       | 描述                                                                                  |
 | ---------- | :------------------------------------------------------------------------------------ |
 | secretName | 用户自定义的密钥名称                                                                  |
 | secretIds  | 用户自定义的 secretID。当类型为手动时需要。 它可以包含 5 到 50 个字母，数字和下划线。 |
 
-- param 参数说明
+### param 参数说明
 
 | 参数         | 描述                                          |
 | ------------ | :-------------------------------------------- |
@@ -197,15 +201,15 @@ inputs:
 
 ### customDomain 参数说明
 
-| 参数             | 必填/可选 |  默认值  | 描述                                                                      |
-| ---------------- | :-------: | :------: | :------------------------------------------------------------------------ |
-| domain           |   必填    |          | 需要绑定的自定义域名                                                      |
-| certificateId    |   可选    |          | 自定义域名的证书，如果设置为 https，则为必需。                            |
-| isDefaultMapping |   可选    | `'TRUE'` | 是否使用默认路径映射。 如果要自定义路径映射，请设为`‘FALSE’`              |
-| pathMappingSet   |   可选    |   `[]`   | 自定义路径映射, 当`isDefaultMapping`为`FALSE`时必填                       |
-| protocols        |   可选    |          | 绑定自定义域协议类型，例如 HTTP，HTTPS，HTTP 和 HTTPS，默认与前端协议相同 |
+| 参数             | 必填/可选 |  默认值  | 描述                                                                                                                 |
+| ---------------- | :-------: | :------: | :------------------------------------------------------------------------------------------------------------------- |
+| domain           |   必填    |          | 需要绑定的自定义域名                                                                                                 |
+| certificateId    |   可选    |          | 自定义域名的证书，如果设置为 https，则为必需。                                                                       |
+| isDefaultMapping |   可选    | `'TRUE'` | 是否使用默认路径映射。 如果要自定义路径映射，请设为`‘FALSE’`                                                         |
+| pathMappingSet   |   可选    |   `[]`   | 自定义路径映射, 当`isDefaultMapping`为`FALSE`时必填，配置参数参考[pathMappingSet 参数说明](#pathMappingSet-参数说明) |
+| protocols        |   可选    |          | 绑定自定义域协议类型，例如 HTTP，HTTPS，HTTP 和 HTTPS，默认与前端协议相同                                            |
 
-- pathMappingSet 参数说明
+### pathMappingSet 参数说明
 
 | 参数        | 描述           |
 | ----------- | :------------- |
