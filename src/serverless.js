@@ -29,6 +29,7 @@ class ServerlessComponent extends Component {
     const apigw = new Apigw(credentials, inputs.region)
 
     inputs.oldState = this.state
+    inputs.serviceId = this.state.serviceId
     const deployRes = await apigw.deploy(inputs)
     this.state = deployRes
 
