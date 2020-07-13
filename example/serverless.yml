@@ -1,8 +1,8 @@
-component: apigateway
-name: apigwDemo
 org: orgDemo
 app: appDemo
 stage: dev
+component: apigateway
+name: apigwDemo
 
 inputs:
   region: ap-guangzhou
@@ -18,8 +18,3 @@ inputs:
       apiName: index
       function:
         functionName: myRestAPI
-      usagePlan:
-        # usagePlanId: 'usagePlan-gulpv8oa'
-        usagePlanName: 'slsgw_usageplan_index'
-        usagePlanDesc: 'slsgw usage plan test'
-        maxRequestNum: 1000

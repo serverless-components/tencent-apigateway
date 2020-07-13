@@ -1,6 +1,7 @@
 const { Component } = require('@serverless/core')
 const { Apigw } = require('tencent-component-toolkit')
 const { TypeError } = require('tencent-component-toolkit/src/utils/error')
+const CONFIGS = require('./config')
 
 class ServerlessComponent extends Component {
   getCredentials() {
@@ -30,6 +31,14 @@ class ServerlessComponent extends Component {
 
     inputs.oldState = this.state
     inputs.serviceId = this.state.serviceId
+
+    // make default config
+    inputs.region = inputs.region || CONFIGS.region
+    inputs.serviceName = inputs.serviceName || CONFIGS.serviceName
+    inputs.protocols = inputs.protocols || CONFIGS.protocols
+    inputs.environment = inputs.environment || CONFIGS.environment
+    inputs.description = inputs.description || CONFIGS.description
+
     const deployRes = await apigw.deploy(inputs)
     this.state = deployRes
 
