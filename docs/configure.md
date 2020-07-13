@@ -24,8 +24,8 @@ inputs:
     - domain: abc.com
       # 如要添加https，需先行在腾讯云-SSL证书进行认证获取cettificateId
       certificateId: abcdefg
-      # 如要设置自定义路径映射，请设置为字符串类型的'FALSE'而不是布尔值FALSE
-      isDefaultMapping: 'FALSE'
+      # 如要设置自定义路径映射，请设置为 false
+      isDefaultMapping: false
       pathMappingSet:
         - path: /
           environment: release
@@ -130,7 +130,7 @@ inputs:
 | method         |   必填    |         | 请求方法                                                                             |
 | serviceType    |   可选    |  `SCF`  | 指定的后端类型，默认为 `SCF`，如要创建 mock 或 http 的类型，可设为 `MOCK`或`HTTP`    |
 | description    |   可选    |         | API 描述                                                                             |
-| enableCORS     |   可选    | `FALSE` | 是否启用跨域访问。 TRUE：启用， FALSE：不启用， 默认为 FALSE                         |
+| enableCORS     |   可选    | `false` | 是否启用跨域访问。 true：启用， false：不启用                                        |
 | function       |   必填    |         | 对应的 Serverless 云函数，配置参数参考[function 参数说明](#function-参数说明)        |
 | usagePlan      |   可选    |         | 基于 API 维度的使用计划，配置参数参考[usagePlan 参数说明](#usageplan-参数说明)       |
 | auth           |   可选    |         | API 鉴权设置，配置参数参考[auth 参数说明](#auth-参数说明)                            |
@@ -196,18 +196,18 @@ inputs:
 | position     | 参数位置，仅支持`PATH`，`QUERY`和`HEADER`类型 |
 | type         | 参数类型，如 String 和 int.                   |
 | defaultValue | 参数默认值                                    |
-| required     | 参数是否必填， 'TRUE': 必填; 'FALSE': 可选    |
+| required     | 参数是否必填， true: 必填; false: 可选        |
 | desc         | 参数备注/描述                                 |
 
 ### customDomain 参数说明
 
-| 参数             | 必填/可选 |  默认值  | 描述                                                                                                                 |
-| ---------------- | :-------: | :------: | :------------------------------------------------------------------------------------------------------------------- |
-| domain           |   必填    |          | 需要绑定的自定义域名                                                                                                 |
-| certificateId    |   可选    |          | 自定义域名的证书，如果设置为 https，则为必需。                                                                       |
-| isDefaultMapping |   可选    | `'TRUE'` | 是否使用默认路径映射。 如果要自定义路径映射，请设为`‘FALSE’`                                                         |
-| pathMappingSet   |   可选    |   `[]`   | 自定义路径映射, 当`isDefaultMapping`为`FALSE`时必填，配置参数参考[pathMappingSet 参数说明](#pathMappingSet-参数说明) |
-| protocols        |   可选    |          | 绑定自定义域协议类型，例如 HTTP，HTTPS，HTTP 和 HTTPS，默认与前端协议相同                                            |
+| 参数             | 必填/可选 | 默认值 | 描述                                                                                                                     |
+| ---------------- | :-------: | :----: | :----------------------------------------------------------------------------------------------------------------------- |
+| domain           |   必填    |        | 需要绑定的自定义域名                                                                                                     |
+| certificateId    |   可选    |        | 自定义域名的证书，如果设置为 https，则为必需。                                                                           |
+| isDefaultMapping |   可选    | `true` | 是否使用默认路径映射。 如果要自定义路径映射，请设为`false`                                                               |
+| pathMappingSet   |   可选    |  `[]`  | 自定义路径映射, 当 `isDefaultMapping` 为 `false` 时必填，配置参数参考[pathMappingSet 参数说明](#pathMappingSet-参数说明) |
+| protocols        |   可选    |        | 绑定自定义域协议类型，例如 HTTP，HTTPS，HTTP 和 HTTPS，默认与前端协议相同                                                |
 
 ### pathMappingSet 参数说明
 
