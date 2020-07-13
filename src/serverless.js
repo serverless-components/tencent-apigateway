@@ -54,6 +54,7 @@ class ServerlessComponent extends Component {
           secretIds:
             api.usagePlan &&
             api.usagePlan.secrets &&
+            api.usagePlan.secrets.secretIds &&
             api.usagePlan.secrets.secretIds.length > 0 &&
             api.usagePlan.secrets.secretIds.join(',')
         }
