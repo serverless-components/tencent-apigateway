@@ -122,22 +122,23 @@ inputs:
 
 ### API 参数说明
 
-| 参数           | 必填/可选 | 默认值  | 描述                                                                                 |
-| -------------- | :-------: | :-----: | :----------------------------------------------------------------------------------- |
-| apiId          |   可选    |         | API 的唯一 ID                                                                        |
-| protocol       |   可选    | `HTTP`  | 指定的前端 API 类型， 默认为`HTTP`，如要创建 websocket 类型的 API，请设为`WEBSOCKET` |
-| path           |   必填    |         | API 路径                                                                             |
-| method         |   必填    |         | 请求方法                                                                             |
-| serviceType    |   可选    |  `SCF`  | 指定的后端类型，默认为 `SCF`，如要创建 mock 或 http 的类型，可设为 `MOCK`或`HTTP`    |
-| description    |   可选    |         | API 描述                                                                             |
-| enableCORS     |   可选    | `false` | 是否启用跨域访问。 true：启用， false：不启用                                        |
-| function       |   必填    |         | 对应的 Serverless 云函数，配置参数参考[function 参数说明](#function-参数说明)        |
-| usagePlan      |   可选    |         | 基于 API 维度的使用计划，配置参数参考[usagePlan 参数说明](#usageplan-参数说明)       |
-| auth           |   可选    |         | API 鉴权设置，配置参数参考[auth 参数说明](#auth-参数说明)                            |
-| serviceTimeout |   可选    |         | API 的后端服务超时时间，单位为秒                                                     |
-| responseType   |   可选    |         | 返回类型: HTML、JSON、TEST、BINARY、XML                                              |
-| param          |   可选    |         | 前端请求参数，配置参数参考[param 参数说明](#param-参数说明)                          |
-| serviceConfig  |   可选    |         | API 的后端服务配置，配置参数参考[serviceConfig 参数说明](#serviceconfig-参数说明)    |
+| 参数                     | 必填/可选 | 默认值  | 描述                                                                                 |
+| ------------------------ | :-------: | :-----: | :----------------------------------------------------------------------------------- |
+| apiId                    |   可选    |         | API 的唯一 ID                                                                        |
+| protocol                 |   可选    | `HTTP`  | 指定的前端 API 类型， 默认为`HTTP`，如要创建 websocket 类型的 API，请设为`WEBSOCKET` |
+| path                     |   必填    |         | API 路径                                                                             |
+| method                   |   必填    |         | 请求方法                                                                             |
+| serviceType              |   可选    |  `SCF`  | 指定的后端类型，默认为 `SCF`，如要创建 mock 或 http 的类型，可设为 `MOCK`或`HTTP`    |
+| description              |   可选    |         | API 描述                                                                             |
+| enableCORS               |   可选    | `false` | 是否启用跨域访问。 true：启用， false：不启用                                        |
+| function                 |   必填    |         | 对应的 Serverless 云函数，配置参数参考[function 参数说明](#function-参数说明)        |
+| usagePlan                |   可选    |         | 基于 API 维度的使用计划，配置参数参考[usagePlan 参数说明](#usageplan-参数说明)       |
+| auth                     |   可选    |         | API 鉴权设置，配置参数参考[auth 参数说明](#auth-参数说明)                            |
+| serviceTimeout           |   可选    |         | API 的后端服务超时时间，单位为秒                                                     |
+| responseType             |   可选    |         | 返回类型: HTML、JSON、TEST、BINARY、XML                                              |
+| param                    |   可选    |         | 前端请求参数，配置参数参考[param 参数说明](#param-参数说明)                          |
+| serviceConfig            |   可选    |         | API 的后端服务配置，配置参数参考[serviceConfig 参数说明](#serviceconfig-参数说明)    |
+| serviceMockReturnMessage |   可选    |         | Mock 接口类型返回结果，如果 `serviceType` 设置为 `MOCK`，此参数必填                  |
 
 - API 类型补充说明
 
