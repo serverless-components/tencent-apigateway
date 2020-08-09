@@ -92,7 +92,9 @@ class ServerlessComponent extends Component {
 
     const { state } = this
     const apigw = new Apigw(credentials, state.region)
-    await apigw.remove(state)
+    if (state && state.serviceId) {
+      await apigw.remove(state)
+    }
     this.state = {}
     return {}
   }
