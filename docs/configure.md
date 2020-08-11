@@ -20,6 +20,9 @@ inputs:
   serviceName: serverless
   description: the serverless service
   environment: release
+  netTypes:
+    - OUTER
+    - INNER
   customDomain:
     - domain: abc.com
       # 如要添加https，需先行在腾讯云-SSL证书进行认证获取cettificateId
@@ -109,16 +112,17 @@ inputs:
 
 ### 主要函数说明
 
-| 参数         | 必填/可选 |     默认值     | 描述                                                                                   |
-| ------------ | :-------: | :------------: | :------------------------------------------------------------------------------------- |
-| serviceId    |   可选    |                | 服务的全局唯一 ID，由系统生成                                                          |
-| region       |   必填    | `ap-guangzhou` | 服务的部署区域，默认为广州（ap-guangzhou）                                             |
-| protocols    |   必填    |                | 服务的前端请求类型，例如 HTTP，HTTPS，HTTP 和 HTTPS。 （http / https）                 |
-| serviceName  |   可选    |                | 用户自定义的服务名称。 如果该参数未传递，则由系统自动生成一个唯一名称                  |
-| description  |   可选    |                | 用户自定义的服务描述说明                                                               |
-| environment  |   必填    |                | 服务要发布的环境的名称，支持三种环境: test（测试）、prepub（预发布）、 release（发布） |
-| endpoints    |   必填    |                | API，配置参数参考[API 参数说明](#api-参数说明)                                         |
-| customDomain |   可选    |      `[]`      | 自定义 API 域名，配置参数参考[customDomain 参数说明](#customdomain-参数说明)           |
+| 参数         | 必填/可选 | 参数类型 |     默认值     | 描述                                                                                   |
+| ------------ | :-------: | :------: | :------------: | :------------------------------------------------------------------------------------- |
+| serviceId    |   可选    |  string  |                | 服务的全局唯一 ID，由系统生成                                                          |
+| region       |   必填    |  string  | `ap-guangzhou` | 服务的部署区域，默认为广州（ap-guangzhou）                                             |
+| protocols    |   必填    | string[] |   `['http']`   | 服务的前端请求类型，例如 HTTP，HTTPS，HTTP 和 HTTPS。 （http / https）                 |
+| serviceName  |   可选    |  string  |                | 用户自定义的服务名称。 如果该参数未传递，则由系统自动生成一个唯一名称                  |
+| netTypes     |   可选    | string[] |  `['OUTER']`   | 网络类型列表，用于指定支持的访问类型，INNER 为内网访问，OUTER 为外网访问。             |
+| description  |   可选    |  string  |                | 用户自定义的服务描述说明                                                               |
+| environment  |   必填    |  string  |                | 服务要发布的环境的名称，支持三种环境: test（测试）、prepub（预发布）、 release（发布） |
+| endpoints    |   必填    | object[] |                | API，配置参数参考[API 参数说明](#api-参数说明)                                         |
+| customDomain |   可选    | object[] |      `[]`      | 自定义 API 域名，配置参数参考[customDomain 参数说明](#customdomain-参数说明)           |
 
 ### API 参数说明
 
