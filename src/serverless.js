@@ -30,7 +30,7 @@ class ServerlessComponent extends Component {
     const apigw = new Apigw(credentials, inputs.region)
 
     inputs.oldState = this.state
-    inputs.serviceId = this.state.serviceId
+    inputs.serviceId = inputs.serviceId || this.state.serviceId
 
     // make default config
     inputs.region = inputs.region || CONFIGS.region
@@ -74,17 +74,25 @@ class ServerlessComponent extends Component {
     if (deployRes.customDomains && deployRes.customDomains.length > 0) {
       outputs.customDomains = []
       deployRes.customDomains.forEach((domain) => {
-        outputs.customDomains.push({
-          domain: domain.subDomain,
-          cname: domain.cname
-        })
+        if (domain.isBinded === false) {
+          outputs.customDomains.push({
+            domain: domain.subDomain,
+            cname: domain.cname,
+            message: domain.message
+          })
+        } else {
+          outputs.customDomains.push({
+            domain: domain.subDomain,
+            cname: domain.cname
+          })
+        }
       })
     }
 
     return outputs
   }
 
-  async remove() {
+  async remove(inputs) {
     console.log(`Removing API Gateway...`)
 
     // get tencent cloud credentials
@@ -92,6 +100,28 @@ class ServerlessComponent extends Component {
 
     const { state } = this
     const apigw = new Apigw(credentials, state.region)
+
+    // support force delete api gateway by command param: --inputs.force
+    if (inputs.force === true) {
+      try {
+        state.created = true
+        if (state.apiList && state.apiList.length > 0) {
+          state.apiList = state.apiList.map((item) => {
+            item.created = true
+            if (item.usagePlan) {
+              item.usagePlan.created = true
+              if (item.usagePlan.secrets) {
+                item.usagePlan.secrets = item.usagePlan.secrets.map((up) => {
+                  up.created = true
+                  return up
+                })
+              }
+            }
+            return item
+          })
+        }
+      } catch (e) {}
+    }
     if (state && state.serviceId) {
       await apigw.remove(state)
     }
