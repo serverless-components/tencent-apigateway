@@ -7,7 +7,7 @@ jest.setTimeout(300000)
 const instanceYaml = {
   org: 'orgDemo',
   app: 'appDemo',
-  component: 'apigateway@dev',
+  component: 'apigateway',
   name: `apigateway-integration-tests-${generateId()}`,
   stage: 'dev',
   inputs: {
