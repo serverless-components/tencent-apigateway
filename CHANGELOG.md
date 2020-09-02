@@ -1,3 +1,10 @@
+## [0.0.9](https://github.com/serverless-components/tencent-apigateway/compare/v0.0.8...v0.0.9) (2020-09-02)
+
+
+### Bug Fixes
+
+* update tencnet-component-toolkit for api mark ([05357d9](https://github.com/serverless-components/tencent-apigateway/commit/05357d90bab8d8de70c050dafb3fae64d71d16ba))
+
 ## [0.0.8](https://github.com/serverless-components/tencent-apigateway/compare/v0.0.7...v0.0.8) (2020-08-27)
 
 
