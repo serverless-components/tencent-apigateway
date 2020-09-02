@@ -1,6 +1,6 @@
 # 腾讯云 API 网关组件
 
-简体中文 ｜ [English](./README.en.md)
+简体中文 ｜ [English](https://github.com/serverless-components/tencent-apigateway/tree/master/README.en.md)
 
 ## 简介
 
@@ -60,7 +60,7 @@ inputs:
         functionName: myFunction
 ```
 
-- [点击此处查看配置文档](./docs/configure.md)
+- [点击此处查看配置文档](https://github.com/serverless-components/tencent-apigateway/tree/master/docs/configure.md)
 
 ### 3. 部署
 

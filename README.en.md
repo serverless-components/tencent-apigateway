@@ -1,6 +1,6 @@
 # tencent-apigateway
 
-[简体中文](./README.md) ｜ English
+[简体中文](https://github.com/serverless-components/tencent-apigateway/tree/master/README.md) ｜ English
 
 Easily provision Tencent API Gateway using [Serverless Components](https://github.com/serverless/components).
 
@@ -66,7 +66,7 @@ inputs:
         functionName: myFunction
 ```
 
-- [Click here to view the configuration document](./docs/configure.md)
+- [Click here to view the configuration document](https://github.com/serverless-components/tencent-apigateway/tree/master/docs/configure.md)
 
 ### 4. Deploy
 
