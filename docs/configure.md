@@ -77,7 +77,7 @@ inputs:
           defaultValue: abc
           desc: mytest
       function:
-        isIntegratedResponse: TRUE
+        isIntegratedResponse: true
         functionQualifier: $LATEST
         functionName: myFunction
       usagePlan:
