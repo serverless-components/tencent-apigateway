@@ -1,11 +1,202 @@
 name: apigateway
-version: 0.0.10
+version: 0.1.0
 author: 'Tencent Cloud, Inc'
 org: 'Tencent Cloud, Inc'
 description: Easily provision Tencent API Gateway.
 keywords: 'tencent, serverless, apigateway'
 repo: 'https://github.com/serverless-components/tencent-apigateway'
-readme: >-
-  https://github.com/serverless-components/tencent-apigateway/tree/master/README.md
+readme: 'https://github.com/serverless-components/tencent-apigateway/tree/master/README.md'
 license: MIT
 main: ./src
+webDeployable: false
+
+actions:
+  deploy:
+    definition: Easily provision Tencent API Gateway
+    inputs:
+      serviceId:
+        type: string
+        regex: '^service-(\w){8,}$'
+      serviceName:
+        type: string
+        description: Name of API Gateway
+        default: serverless
+        regex: '^[a-zA-Z][a-zA-Z0-9(_)]{0,48}[a-zA-Z0-9]?$'
+      serviceDesc:
+        type: string
+        default: Created by Serverless Component
+      region:
+        type: string
+        default: ap-guangzhou
+        description: Region for API Gateway
+        allow:
+          - ap-guangzhou
+          - ap-shanghai
+          - ap-beijing
+          - ap-nanjing
+          - ap-chengdu
+          - ap-hongkong
+          - ap-singapore
+          - ap-tokyo
+          - na-seoul
+          - na-siliconvalley
+      protocols:
+        type: array
+        default:
+          - http
+        items:
+          - type: string
+            allow:
+              - http
+              - https
+      netTypes:
+        type: array
+        default:
+          - OUTER
+        items:
+          - type: string
+            allow:
+              - OUTER
+              - INNER
+      environment:
+        type: string
+        default: release
+        allow:
+          - release
+          - test
+          - prepub
+      endpoints:
+        type: array
+        items:
+          - type: object
+            keys:
+              path:
+                type: string
+              method:
+                type: string
+                allow:
+                  - ANY
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                  - HEAD
+              apiName:
+                type: string
+              apiDesc:
+                type: string
+              enableCORS:
+                type: boolean
+              serviceType:
+                type: string
+                allow:
+                  - SCF
+                  - WEBSOCKET
+                  - MOCK
+                  - HTTP
+              responseType:
+                type: string
+                allow:
+                  - HTML
+                  - JSON
+                  - TEST
+                  - BINARY
+              serviceTimeout:
+                type: number
+                min: 1
+                max: 1800
+              # be is HTTP
+              serviceConfig:
+                url:
+                  type: string
+                path:
+                  type: string
+                method:
+                  type: string
+                  allow:
+                    - ANY
+                    - GET
+                    - POST
+                    - PUT
+                    - DELETE
+                    - HEAD
+              # param for frontend request
+              param:
+                type: array
+                items:
+                  - type: object
+                    keys:
+                      name:
+                        type: string
+                      position:
+                        type: string
+                        allow:
+                          - PATH
+                          - HEADER
+                          - QUERY
+                          - BODY
+                      required:
+                        type: boolean
+                      type:
+                        type: string
+                        allow:
+                          - string
+                          - int
+                          - long
+                          - float
+                          - double
+                          - boolean
+                      desc:
+                        type: string
+              function:
+                type: object
+                keys:
+                  # for SCF
+                  isIntegratedResponse:
+                    type: boolean
+                  functionQualifier:
+                    type: string
+                  functionName:
+                    type: string
+                  # for ws
+                  transportFunctionName:
+                    type: string
+                  registerFunctionName:
+                    type: string
+                  cleanupFunctionName:
+                    type: string
+      # customize domains
+      customDomains:
+        type: array
+        items:
+          - type: object
+            keys:
+              domain:
+                type: string
+                required: true
+              certificateId:
+                type: string
+              isDefaultMapping:
+                type: boolean
+              pathMappingSet:
+                type: array
+                items:
+                  - type: object
+                    keys:
+                      path:
+                        type: string
+                      environment:
+                        type: string
+                        allow:
+                          - release
+                          - test
+                          - prepub
+              protocols:
+                type: array
+                items:
+                  - type: string
+                    allow:
+                      - http
+                      - https
+  remove:
+    definition: Remove your Express.js application

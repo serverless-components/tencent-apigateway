@@ -5,7 +5,7 @@ const CONFIGS = {
   serviceName: 'serverless',
   protocols: ['http'],
   environment: 'release',
-  description: 'Created by Serverless Component'
+  serviceDesc: 'Created by Serverless Component'
 }
 
 module.exports = CONFIGS

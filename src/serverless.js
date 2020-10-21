@@ -22,7 +22,7 @@ class ServerlessComponent extends Component {
   }
 
   async deploy(inputs) {
-    console.log(`Deploying API Gateway...`)
+    console.log(`Deploying API Gateway`)
 
     // get tencent cloud credentials
     const credentials = this.getCredentials()
@@ -37,7 +37,7 @@ class ServerlessComponent extends Component {
     inputs.serviceName = inputs.serviceName || CONFIGS.serviceName
     inputs.protocols = inputs.protocols || CONFIGS.protocols
     inputs.environment = inputs.environment || CONFIGS.environment
-    inputs.description = inputs.description || CONFIGS.description
+    inputs.serviceDesc = inputs.serviceDesc || CONFIGS.serviceDesc
 
     const deployRes = await apigw.deploy(inputs)
     this.state = deployRes
@@ -93,7 +93,7 @@ class ServerlessComponent extends Component {
   }
 
   async remove(inputs) {
-    console.log(`Removing API Gateway...`)
+    console.log(`Removing API Gateway`)
 
     // get tencent cloud credentials
     const credentials = this.getCredentials()
