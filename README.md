@@ -1,7 +1,5 @@
 # 腾讯云 API 网关组件
 
-简体中文 ｜ [English](https://github.com/serverless-components/tencent-apigateway/tree/master/README.en.md)
-
 ## 简介
 
 该组件是 serverless-tencent 组件库中的基础组件之一。通过 API 网关组件，可以快速，方便的创建，配置和管理腾讯云的 API 网关产品。
