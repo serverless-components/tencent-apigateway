@@ -1,3 +1,10 @@
+# [0.1.0](https://github.com/serverless-components/tencent-apigateway/compare/v0.0.10...v0.1.0) (2020-10-22)
+
+
+### Features
+
+* support type check ([751efae](https://github.com/serverless-components/tencent-apigateway/commit/751efae52bb0605e755c478fc2cea473f251ef45))
+
 ## [0.0.10](https://github.com/serverless-components/tencent-apigateway/compare/v0.0.9...v0.0.10) (2020-09-07)
 
 
