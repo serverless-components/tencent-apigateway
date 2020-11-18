@@ -84,7 +84,8 @@ inputs:
         usagePlanId: 1111
         usagePlanName: slscmp
         usagePlanDesc: sls create
-        maxRequestNum: 1000
+        maxRequestNum: -1
+        maxRequestNumPreSec: 1000
       auth:
         secretName: secret
         secretIds:
@@ -179,12 +180,13 @@ inputs:
 
 ### usagePlan 参数说明
 
-| 参数          | 描述                                                                                       |
-| ------------- | :----------------------------------------------------------------------------------------- |
-| usagePlanId   | 用户自定义的基于 API 的使用计划 ID                                                         |
-| usagePlanName | 用户自定义的基于 API 的使用计划名称                                                        |
-| usagePlanDesc | 用户自定义的基于 API 的使用计划描述                                                        |
-| maxRequestNum | 允许的请求总数。不传该参数时默认为 1000 次，若其保留为空，则默认情况下将使用-1，表示已禁用 |
+| 参数                | 描述                                                                                       |
+| ------------------- | :----------------------------------------------------------------------------------------- |
+| usagePlanId         | 用户自定义的基于 API 的使用计划 ID                                                         |
+| usagePlanName       | 用户自定义的基于 API 的使用计划名称                                                        |
+| usagePlanDesc       | 用户自定义的基于 API 的使用计划描述                                                        |
+| maxRequestNum       | 允许的请求总数。若其保留为空，则默认情况下将使用-1，表示已禁用                             |
+| maxRequestNumPreSec | 每秒最大请求数。不传该参数时默认为 1000 次，若其保留为空，则默认情况下将使用-1，表示已禁用 |
 
 ### auth 参数说明
 
