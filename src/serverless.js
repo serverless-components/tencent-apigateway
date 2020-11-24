@@ -101,7 +101,7 @@ class ServerlessComponent extends Component {
     const { state } = this
     const apigw = new Apigw(credentials, state.region)
 
-    // support force delete api gateway by command param: --inputs.force
+    // support force delete api gateway by command param: --inputs force=true
     if (inputs.force === true) {
       try {
         state.created = true
