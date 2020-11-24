@@ -1,3 +1,10 @@
+## [0.1.1](https://github.com/serverless-components/tencent-apigateway/compare/v0.1.0...v0.1.1) (2020-11-24)
+
+
+### Bug Fixes
+
+* update deps ([#18](https://github.com/serverless-components/tencent-apigateway/issues/18)) ([6aee1a9](https://github.com/serverless-components/tencent-apigateway/commit/6aee1a97f7a023288499922db2334bab80cba444))
+
 # [0.1.0](https://github.com/serverless-components/tencent-apigateway/compare/v0.0.10...v0.1.0) (2020-10-22)
 
 
