@@ -21,6 +21,10 @@ class ServerlessComponent extends Component {
     }
   }
 
+  getDefaultProtocol(protocols) {
+    return String(protocols).includes('https') ? 'https' : 'http'
+  }
+
   async deploy(inputs) {
     console.log(`Deploying API Gateway`)
 
@@ -38,6 +42,13 @@ class ServerlessComponent extends Component {
     inputs.protocols = inputs.protocols || CONFIGS.protocols
     inputs.environment = inputs.environment || CONFIGS.environment
     inputs.serviceDesc = inputs.serviceDesc || CONFIGS.serviceDesc
+    inputs.endpoints = inputs.endpoints.map((item) => {
+      if (item.oauthConfig) {
+        item.oauthConfig.tokenLocation =
+          CONFIGS.tokenLocationMap[item.oauthConfig.tokenLocation] || item.oauthConfig.tokenLocation
+      }
+      return item
+    })
 
     const deployRes = await apigw.deploy(inputs)
     this.state = deployRes
@@ -49,6 +60,8 @@ class ServerlessComponent extends Component {
           path: api.path,
           method: api.method,
           apiId: api.apiId,
+          authType: api.authType,
+          businessType: api.businessType,
           internalDomain: api.internalDomain || undefined,
           usagePlanId: api.usagePlan && api.usagePlan.usagePlanId,
           secretIds:
@@ -58,11 +71,17 @@ class ServerlessComponent extends Component {
             api.usagePlan.secrets.secretIds.length > 0 &&
             api.usagePlan.secrets.secretIds.join(',')
         }
+        if (api.authRelationApiId) {
+          output.authRelationApiId = api.authRelationApiId
+        }
         apiOutput.push(output)
       })
     }
 
     const outputs = {
+      url: `${this.getDefaultProtocol(deployRes.protocols)}://${deployRes.subDomain}/${
+        deployRes.environment
+      }/`,
       protocols: deployRes.protocols,
       subDomain: deployRes.subDomain,
       environment: deployRes.environment,

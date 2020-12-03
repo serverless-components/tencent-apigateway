@@ -14,7 +14,7 @@ inputs:
   endpoints:
     - path: /
       protocol: HTTP
-      method: GET
+      method: ANY
       apiName: index
       function:
-        functionName: myRestAPI
+        functionName: scfdemo-dev-scfdemo

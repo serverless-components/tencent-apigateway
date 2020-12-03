@@ -12,7 +12,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          # Ensure connection with 'master' branch
           fetch-depth: 2
 
       - name: Install Node.js and npm
@@ -38,10 +37,11 @@ jobs:
         run: |
           npm update --no-save
           npm update --save-dev --no-save
-      - name: Running integration tests
+      - name: Running tests
         run: npm run test
         env:
           SERVERLESS_PLATFORM_VENDOR: tencent
           GLOBAL_ACCELERATOR_NA: true
           TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
           TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
+          API_PUBLIC_KEY: ${{ secrets.API_PUBLIC_KEY }}

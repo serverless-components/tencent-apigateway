@@ -2,24 +2,19 @@
 
 ## 简介
 
-该组件是 serverless-tencent 组件库中的基础组件之一。通过 API 网关组件，可以快速，方便的创建，配置和管理腾讯云的 API 网关产品。
+通过 API 网关组件，可以快速，方便的创建，配置和管理腾讯云的 API 网关产品。
 
-## 快速开始
-
-&nbsp;
-
-通过 API 网关组件，对一个 API 服务/接口进行完整的创建，配置，部署和删除等操作。支持命令如下：
+快速开始：
 
 1. [安装](#1-安装)
 2. [配置](#2-配置)
 3. [部署](#3-部署)
-4. [移除](#4-移除)
-
-&nbsp;
+4. [查看状态](#4-查看状态)
+5. [移除](#5-移除)
 
 ### 1. 安装
 
-通过 npm 安装 serverless
+通过 npm 安装最新版本的 Serverless Framework
 
 ```bash
 $ npm install -g serverless
@@ -36,11 +31,11 @@ $ touch serverless.yml
 ```yml
 # serverless.yml
 
-component: apigateway # (必填) 组件名称，此处为nextjs
-name: apigwDemo # (必填) 实例名称
-org: orgDemo # (可选) 用于记录组织信息，默认值为您的腾讯云账户 appid
-app: appDemo # (可选) 该 next.js 应用名称
-stage: dev # (可选) 用于区分环境信息，默认值是 dev
+org: orgDemo
+app: appDemo
+stage: dev
+component: apigateway
+name: apigwDemo
 
 inputs:
   region: ap-guangzhou
@@ -58,7 +53,7 @@ inputs:
         functionName: myFunction
 ```
 
-- [点击此处查看配置文档](https://github.com/serverless-components/tencent-apigateway/tree/master/docs/configure.md)
+点此查看[全量配置及配置说明](https://github.com/serverless-components/tencent-apigateway/tree/master/docs/configure.md)
 
 ### 3. 部署
 
@@ -70,7 +65,15 @@ inputs:
 $ sls deploy
 ```
 
-### 4. 移除
+### 4. 查看状态
+
+在`serverless.yml`文件所在的目录下，通过如下命令查看部署状态：
+
+```
+$ serverless info
+```
+
+### 5. 移除
 
 通过以下命令移除部署的 API 网关
 
@@ -98,6 +101,8 @@ TENCENT_SECRET_ID=123
 TENCENT_SECRET_KEY=123
 ```
 
-### 还支持哪些组件？
+## License
 
-可以在 [Serverless Components](https://github.com/serverless/components) repo 中查询更多组件的信息。
+MIT License
+
+Copyright (c) 2020 Tencent Cloud, Inc.
