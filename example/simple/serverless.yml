@@ -17,4 +17,4 @@ inputs:
       method: ANY
       apiName: index
       function:
-        functionName: scfdemo-dev-scfdemo
+        functionName: serverless-unit-test

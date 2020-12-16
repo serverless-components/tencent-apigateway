@@ -29,7 +29,7 @@ inputs:
         # 生成方式请参考官方文档：https://cloud.tencent.com/document/product/628/38393
         publicKey: '{"e":"AQAB","kty":"RSA","n":"xxxxxxxx"}'
         tokenLocation: authorization
-    - path: "/oauthwork"
+    - path: '/oauthwork'
       protocol: HTTP
       method: GET
       apiName: business
@@ -40,4 +40,3 @@ inputs:
         method: GET
       serviceType: MOCK
       serviceMockReturnMessage: helloworld
-
