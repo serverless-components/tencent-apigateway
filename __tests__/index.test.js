@@ -1,13 +1,5 @@
-const path = require('path')
-require('dotenv').config({
-  path: path.join(__dirname, '..', '.env.test')
-})
-const { generateId, getServerlessSdk } = require('./utils')
+const { generateId, getServerlessSdk } = require('./lib/utils')
 
-// set enough timeout for deployment to finish
-jest.setTimeout(300000)
-
-// the yaml file we're testing against
 const instanceYaml = {
   org: 'orgDemo',
   app: 'appDemo',
@@ -26,7 +18,7 @@ const instanceYaml = {
         method: 'GET',
         apiName: 'indextest',
         function: {
-          functionName: 'myRestAPI'
+          functionName: 'serverless-unit-test'
         },
         usagePlan: {
           usagePlanName: 'slscmp',
@@ -41,9 +33,9 @@ const instanceYaml = {
         method: 'GET',
         apiName: 'WS-SCF-API',
         function: {
-          transportFunctionName: 'myFunction',
-          registerFunctionName: 'myFunction',
-          cleanupFunctionName: 'myFunction'
+          transportFunctionName: 'serverless-unit-test',
+          registerFunctionName: 'serverless-unit-test',
+          cleanupFunctionName: 'serverless-unit-test'
         }
       },
       {
@@ -77,7 +69,42 @@ const instanceYaml = {
           path: '/test',
           method: 'GET'
         }
-      }
+      },
+       // below two api is for oauth2.0 test
+       {
+        path: '/oauth',
+        protocol: 'HTTP',
+        method: 'GET',
+        apiName: 'oauthapi',
+        authType: 'OAUTH',
+        businessType: 'OAUTH',
+        serviceType: 'HTTP',
+        serviceConfig: {
+          method: 'GET',
+          path: '/check',
+          url: 'http://127.0.0.1:9090',
+        },
+        oauthConfig: {
+          loginRedirectUrl: 'http://127.0.0.1:9090/code',
+          publicKey: process.env.API_PUBLIC_KEY,
+          tokenLocation: 'authorization',
+          // tokenLocation: 'method.req.header.cookie',
+        },
+      },
+      {
+        path: '/oauthwork',
+        protocol: 'HTTP',
+        method: 'GET',
+        apiName: 'business',
+        authType: 'OAUTH',
+        businessType: 'NORMAL',
+        authRelationApi: {
+          path: '/oauth',
+          method: 'GET',
+        },
+        serviceType: 'MOCK',
+        serviceMockReturnMessage: 'helloworld',
+      },
     ]
   }
 }
@@ -89,7 +116,6 @@ const credentials = {
   }
 }
 
-// get serverless construct sdk
 const sdk = getServerlessSdk(instanceYaml.org)
 
 it('should successfully deploy apigateway service', async () => {
@@ -102,10 +128,10 @@ it('should successfully deploy apigateway service', async () => {
   expect(instance.state).toBeDefined()
   expect(instance.state.serviceName).toEqual(instanceYaml.inputs.serviceName)
 
+  // outputs
   expect(instance.outputs).toBeDefined()
   expect(instance.outputs.serviceId).toBeDefined()
   instanceYaml.inputs.serviceId = instance.outputs.serviceId
-
   expect(instance.outputs.apis).toBeDefined()
   expect(instance.outputs.apis.length).toEqual(instanceYaml.inputs.endpoints.length)
   expect(instance.outputs.apis[0].path).toEqual(instanceYaml.inputs.endpoints[0].path)
@@ -113,25 +139,46 @@ it('should successfully deploy apigateway service', async () => {
 
   expect(instance.state.apiList).toBeDefined()
   expect(instance.state.apiList.length).toEqual(instanceYaml.inputs.endpoints.length)
-  expect(instance.state.apiList[0].bindType).toEqual('API')
+
+  // scf api
   expect(instance.state.apiList[0].usagePlan).toBeDefined()
   expect(instance.state.apiList[0].usagePlan.secrets).toBeDefined()
   expect(instance.state.apiList[0].usagePlan.usagePlanId).toBeDefined()
   instanceYaml.inputs.endpoints[0].usagePlan.usagePlanId =
     instance.state.apiList[0].usagePlan.usagePlanId
 
+  // ws api
   expect(instance.state.apiList[1].apiName).toEqual(instanceYaml.inputs.endpoints[1].apiName)
   expect(instance.state.apiList[1].path).toEqual(instanceYaml.inputs.endpoints[1].path)
   expect(instance.state.apiList[1].method).toEqual(instanceYaml.inputs.endpoints[1].method)
   expect(instance.state.apiList[2].apiName).toEqual(instanceYaml.inputs.endpoints[2].apiName)
   expect(instance.state.apiList[2].path).toEqual(instanceYaml.inputs.endpoints[2].path)
   expect(instance.state.apiList[2].method).toEqual(instanceYaml.inputs.endpoints[2].method)
+
+  // mock api
   expect(instance.state.apiList[3].apiName).toEqual(instanceYaml.inputs.endpoints[3].apiName)
   expect(instance.state.apiList[3].path).toEqual(instanceYaml.inputs.endpoints[3].path)
   expect(instance.state.apiList[3].method).toEqual(instanceYaml.inputs.endpoints[3].method)
+
+  // backend http api
   expect(instance.state.apiList[4].apiName).toEqual(instanceYaml.inputs.endpoints[4].apiName)
   expect(instance.state.apiList[4].path).toEqual(instanceYaml.inputs.endpoints[4].path)
   expect(instance.state.apiList[4].method).toEqual(instanceYaml.inputs.endpoints[4].method)
+
+  // oauth api
+  expect(instance.state.apiList[5].apiName).toEqual(instanceYaml.inputs.endpoints[5].apiName)
+  expect(instance.state.apiList[5].path).toEqual(instanceYaml.inputs.endpoints[5].path)
+  expect(instance.state.apiList[5].method).toEqual(instanceYaml.inputs.endpoints[5].method)
+  expect(instance.state.apiList[5].authType).toEqual(instanceYaml.inputs.endpoints[5].authType)
+  expect(instance.state.apiList[5].businessType).toEqual(instanceYaml.inputs.endpoints[5].businessType)
+
+  // oauth business api
+  expect(instance.state.apiList[6].apiName).toEqual(instanceYaml.inputs.endpoints[6].apiName)
+  expect(instance.state.apiList[6].path).toEqual(instanceYaml.inputs.endpoints[6].path)
+  expect(instance.state.apiList[6].method).toEqual(instanceYaml.inputs.endpoints[6].method)
+  expect(instance.state.apiList[6].authType).toEqual(instanceYaml.inputs.endpoints[6].authType)
+  expect(instance.state.apiList[6].businessType).toEqual(instanceYaml.inputs.endpoints[6].businessType)
+  expect(instance.state.apiList[6].authRelationApiId).toEqual(instance.state.apiList[5].apiId)
 })
 
 it('should successfully remove apigateway service', async () => {

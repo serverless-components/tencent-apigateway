@@ -1,0 +1,42 @@
+org: orgDemo
+app: appDemo
+stage: dev
+component: apigateway
+name: apigwDemo
+
+inputs:
+  region: ap-guangzhou
+  protocols:
+    - http
+    - https
+  serviceName: 'sls_apigw_test'
+  environment: release
+  endpoints:
+    - path: /oauth
+      protocol: HTTP
+      method: GET
+      apiName: oauthapi
+      authType: OAUTH
+      businessType: OAUTH
+      serviceType: HTTP
+      serviceConfig:
+        method: GET
+        path: /check
+        url: http://127.0.0.1:9090
+      oauthConfig:
+        loginRedirectUrl: http://127.0.0.1:9090/code
+        # 请修改为自己的 RSA 公钥
+        # 生成方式请参考官方文档：https://cloud.tencent.com/document/product/628/38393
+        publicKey: '{"e":"AQAB","kty":"RSA","n":"xxxxxxxx"}'
+        tokenLocation: authorization
+    - path: '/oauthwork'
+      protocol: HTTP
+      method: GET
+      apiName: business
+      authType: OAUTH
+      businessType: NORMAL
+      authRelationApi:
+        path: /oauth
+        method: GET
+      serviceType: MOCK
+      serviceMockReturnMessage: helloworld

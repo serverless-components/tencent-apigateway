@@ -1,5 +1,5 @@
 name: apigateway
-version: 0.1.1
+version: 0.1.2
 author: 'Tencent Cloud, Inc'
 org: 'Tencent Cloud, Inc'
 description: Easily provision Tencent API Gateway.
@@ -94,6 +94,17 @@ actions:
                   - WEBSOCKET
                   - MOCK
                   - HTTP
+              authType:
+                type: string
+                allow:
+                  - NONE
+                  - SECRET
+                  - OAUTH
+              businessType:
+                type: string
+                allow:
+                  - NORMAL
+                  - OAUTH
               responseType:
                 type: string
                 allow:
@@ -101,25 +112,54 @@ actions:
                   - JSON
                   - TEST
                   - BINARY
+                  - XML
               serviceTimeout:
                 type: number
                 min: 1
                 max: 1800
               # be is HTTP
               serviceConfig:
-                url:
-                  type: string
-                path:
-                  type: string
-                method:
-                  type: string
-                  allow:
-                    - ANY
-                    - GET
-                    - POST
-                    - PUT
-                    - DELETE
-                    - HEAD
+                type: object
+                keys:
+                  url:
+                    type: string
+                  path:
+                    type: string
+                  method:
+                    type: string
+                    allow:
+                      - ANY
+                      - GET
+                      - POST
+                      - PUT
+                      - DELETE
+                      - HEAD
+              oauthConfig:
+                type: object
+                keys:
+                  loginRedirectUrl:
+                    type: string
+                  publicKey:
+                    type: string
+                  tokenLocation:
+                    type: string
+                    allow:
+                      - authorization
+                      - cookie
+              authRelationApi:
+                type: object
+                keys:
+                  path:
+                    type: string
+                  method:
+                    type: string
+                    allow:
+                      - ANY
+                      - GET
+                      - POST
+                      - PUT
+                      - DELETE
+                      - HEAD
               # param for frontend request
               param:
                 type: array
