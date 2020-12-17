@@ -1,3 +1,10 @@
+## [0.1.2](https://github.com/serverless-components/tencent-apigateway/compare/v0.1.1...v0.1.2) (2020-12-17)
+
+
+### Bug Fixes
+
+* support oauth2.0 ([#19](https://github.com/serverless-components/tencent-apigateway/issues/19)) ([f00455e](https://github.com/serverless-components/tencent-apigateway/commit/f00455ed84c95f3efafbbe67ded790f9673d60c8))
+
 ## [0.1.1](https://github.com/serverless-components/tencent-apigateway/compare/v0.1.0...v0.1.1) (2020-11-24)
 
 
