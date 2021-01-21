@@ -63,6 +63,7 @@ class ServerlessComponent extends Component {
           authType: api.authType,
           businessType: api.businessType,
           internalDomain: api.internalDomain || undefined,
+          isBase64Encoded: api.isBase64Encoded,
           usagePlanId: api.usagePlan && api.usagePlan.usagePlanId,
           secretIds:
             api.usagePlan &&

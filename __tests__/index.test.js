@@ -70,8 +70,29 @@ const instanceYaml = {
           method: 'GET'
         }
       },
-       // below two api is for oauth2.0 test
-       {
+      {
+        path: '/base64',
+        protocol: 'HTTP',
+        method: 'GET',
+        apiName: 'base64',
+        function: {
+          functionName: 'serverless-unit-test'
+        },
+        isBase64Encoded: true,
+        isBase64Trigger: true,
+        base64EncodedTriggerRules: [
+          {
+            name: 'Accept',
+            value: ['image/jpeg']
+          },
+          {
+            name: 'Content_Type',
+            value: ['image/jpeg']
+          },
+        ]
+      },
+      // below two api is for oauth2.0 test
+      {
         path: '/oauth',
         protocol: 'HTTP',
         method: 'GET',
@@ -105,6 +126,7 @@ const instanceYaml = {
         serviceType: 'MOCK',
         serviceMockReturnMessage: 'helloworld',
       },
+
     ]
   }
 }
@@ -118,7 +140,7 @@ const credentials = {
 
 const sdk = getServerlessSdk(instanceYaml.org)
 
-it('should successfully deploy apigateway service', async () => {
+it('deploy apigateway service', async () => {
   const instance = await sdk.deploy(instanceYaml, credentials)
 
   expect(instance).toBeDefined()
@@ -165,23 +187,29 @@ it('should successfully deploy apigateway service', async () => {
   expect(instance.state.apiList[4].path).toEqual(instanceYaml.inputs.endpoints[4].path)
   expect(instance.state.apiList[4].method).toEqual(instanceYaml.inputs.endpoints[4].method)
 
-  // oauth api
+  // base64 api
   expect(instance.state.apiList[5].apiName).toEqual(instanceYaml.inputs.endpoints[5].apiName)
   expect(instance.state.apiList[5].path).toEqual(instanceYaml.inputs.endpoints[5].path)
   expect(instance.state.apiList[5].method).toEqual(instanceYaml.inputs.endpoints[5].method)
-  expect(instance.state.apiList[5].authType).toEqual(instanceYaml.inputs.endpoints[5].authType)
-  expect(instance.state.apiList[5].businessType).toEqual(instanceYaml.inputs.endpoints[5].businessType)
+  expect(instance.state.apiList[5].isBase64Encoded).toEqual(instanceYaml.inputs.endpoints[5].isBase64Encoded)
 
-  // oauth business api
+  // oauth api
   expect(instance.state.apiList[6].apiName).toEqual(instanceYaml.inputs.endpoints[6].apiName)
   expect(instance.state.apiList[6].path).toEqual(instanceYaml.inputs.endpoints[6].path)
   expect(instance.state.apiList[6].method).toEqual(instanceYaml.inputs.endpoints[6].method)
   expect(instance.state.apiList[6].authType).toEqual(instanceYaml.inputs.endpoints[6].authType)
   expect(instance.state.apiList[6].businessType).toEqual(instanceYaml.inputs.endpoints[6].businessType)
-  expect(instance.state.apiList[6].authRelationApiId).toEqual(instance.state.apiList[5].apiId)
+
+  // oauth business api
+  expect(instance.state.apiList[7].apiName).toEqual(instanceYaml.inputs.endpoints[7].apiName)
+  expect(instance.state.apiList[7].path).toEqual(instanceYaml.inputs.endpoints[7].path)
+  expect(instance.state.apiList[7].method).toEqual(instanceYaml.inputs.endpoints[7].method)
+  expect(instance.state.apiList[7].authType).toEqual(instanceYaml.inputs.endpoints[7].authType)
+  expect(instance.state.apiList[7].businessType).toEqual(instanceYaml.inputs.endpoints[7].businessType)
+  expect(instance.state.apiList[7].authRelationApiId).toEqual(instance.state.apiList[6].apiId)
 })
 
-it('should successfully remove apigateway service', async () => {
+it('remove apigateway service', async () => {
   await sdk.remove(instanceYaml, credentials)
   result = await sdk.getInstance(
     instanceYaml.org,

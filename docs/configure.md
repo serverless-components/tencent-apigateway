@@ -63,6 +63,15 @@ inputs:
       enableCORS: true
       responseType: HTML
       serviceTimeout: 10
+      isBase64Encoded: false
+      isBase64Trigger: false
+      base64EncodedTriggerRules:
+        - name: Accept
+          value:
+            - image/jpeg
+        - name: Content_Type
+          value:
+            - image/jpeg
       param:
         - name: abc
           position: PATH
@@ -158,27 +167,30 @@ inputs:
 
 API 参数说明
 
-| 参数                     | 必选 |                 类型                  |  默认值  | 描述                                                                                                              |
-| ------------------------ | :--: | :-----------------------------------: | :------: | :---------------------------------------------------------------------------------------------------------------- |
-| apiId                    |  否  |                string                 |          | API 的唯一 ID                                                                                                     |
-| protocol                 |  否  |                string                 |  `HTTP`  | 指定的前端 API 类型，支持 `HTTP`、`WEBSOCKET`                                                                     |
-| path                     |  是  |                string                 |          | API 路径                                                                                                          |
-| method                   |  是  |                string                 |          | 请求方法                                                                                                          |
-| serviceType              |  否  |                string                 |  `SCF`   | 指定的后端类型，支持：`SCF`、`HTTP`、MOCK                                                                         |
-| description              |  否  |                string                 |          | API 描述                                                                                                          |
-| enableCORS               |  否  |                boolean                | `false`  | 是否启用跨域访问。 true：启用， false：不启用                                                                     |
-| function                 |  是  |         [Function](#Function)         |          | 对应的 Serverless 云函数                                                                                          |
-| usagePlan                |  否  |        [UsagePlan](#UsagePlan)        |          | 基于 API 维度的使用计划                                                                                           |
-| auth                     |  否  |       [SecretAuth](#SecretAuth)       |          | API 密钥鉴权设置                                                                                                  |
-| serviceTimeout           |  否  |                number                 |   `15`   | API 的后端服务超时时间，单位为秒                                                                                  |
-| responseType             |  否  |                string                 |          | 返回类型: `HTML`、`JSON`、`TEST`、`BINARY`、`XML`                                                                 |
-| param                    |  否  | [RequestParameter](#RequestParameter) |          | 前端请求参数                                                                                                      |
-| serviceConfig            |  否  |    [ServiceConfig](#ServiceConfig)    |          | API 的后端服务配置                                                                                                |
-| serviceMockReturnMessage |  否  |                string                 |          | Mock 接口类型返回结果，如果 `serviceType` 设置为 `MOCK`，此参数必须                                               |
-| authType                 |  否  |                string                 |  `NONE`  | 鉴权类型，支持：`NONE`(免鉴权)、`SECRET`(密钥对)，`OAUTH`(Oauth2.0)                                               |
-| businessType             |  否  |                string                 | `NORMAL` | 业务类型，支持：`NORMAL`、`OAUTH`                                                                                 |
-| oauthConfig              |  否  |      [OauthConfig](#OauthConfig)      |          | Oauth2.0 鉴权，授业 API 后端配置，当 `authType` 为 `OAUTH`, 并且 businessType 为 `OAUTH` 时，此参数必须           |
-| authRelationApi          |  否  |  [AuthRelationApi](#AuthRelationApi)  |          | Oauth2.0 鉴权，业务 API 关联授业 API 配置，当 `authType` 为 `OAUTH`, 并且 businessType 为 `NORMAL` 时，此参数必须 |
+| 参数                      | 必选 |                 类型                  |  默认值  | 描述                                                                                                              |
+| ------------------------- | :--: | :-----------------------------------: | :------: | :---------------------------------------------------------------------------------------------------------------- |
+| apiId                     |  否  |                string                 |          | API 的唯一 ID                                                                                                     |
+| protocol                  |  否  |                string                 |  `HTTP`  | 指定的前端 API 类型，支持 `HTTP`、`WEBSOCKET`                                                                     |
+| path                      |  是  |                string                 |          | API 路径                                                                                                          |
+| method                    |  是  |                string                 |          | 请求方法                                                                                                          |
+| serviceType               |  否  |                string                 |  `SCF`   | 指定的后端类型，支持：`SCF`、`HTTP`、MOCK                                                                         |
+| description               |  否  |                string                 |          | API 描述                                                                                                          |
+| enableCORS                |  否  |                boolean                | `false`  | 是否启用跨域访问。 true：启用， false：不启用                                                                     |
+| function                  |  是  |         [Function](#Function)         |          | 对应的 Serverless 云函数                                                                                          |
+| usagePlan                 |  否  |        [UsagePlan](#UsagePlan)        |          | 基于 API 维度的使用计划                                                                                           |
+| auth                      |  否  |       [SecretAuth](#SecretAuth)       |          | API 密钥鉴权设置                                                                                                  |
+| serviceTimeout            |  否  |                number                 |   `15`   | API 的后端服务超时时间，单位为秒                                                                                  |
+| responseType              |  否  |                string                 |          | 返回类型: `HTML`、`JSON`、`TEST`、`BINARY`、`XML`                                                                 |
+| param                     |  否  | [RequestParameter](#RequestParameter) |          | 前端请求参数                                                                                                      |
+| serviceConfig             |  否  |    [ServiceConfig](#ServiceConfig)    |          | API 的后端服务配置                                                                                                |
+| serviceMockReturnMessage  |  否  |                string                 |          | Mock 接口类型返回结果，如果 `serviceType` 设置为 `MOCK`，此参数必须                                               |
+| authType                  |  否  |                string                 |  `NONE`  | 鉴权类型，支持：`NONE`(免鉴权)、`SECRET`(密钥对)，`OAUTH`(Oauth2.0)                                               |
+| businessType              |  否  |                string                 | `NORMAL` | 业务类型，支持：`NORMAL`、`OAUTH`                                                                                 |
+| oauthConfig               |  否  |      [OauthConfig](#OauthConfig)      |          | Oauth2.0 鉴权，授业 API 后端配置，当 `authType` 为 `OAUTH`, 并且 businessType 为 `OAUTH` 时，此参数必须           |
+| authRelationApi           |  否  |  [AuthRelationApi](#AuthRelationApi)  |          | Oauth2.0 鉴权，业务 API 关联授业 API 配置，当 `authType` 为 `OAUTH`, 并且 businessType 为 `NORMAL` 时，此参数必须 |
+| isBase64Encoded           |  否  |                boolean                | `false`  | 是否开启 Base64 编码，只有后端为 scf 时才会生效                                                                   |
+| isBase64Trigger           |  否  |                boolean                | `false`  | 是否开启 Base64 编码的 header 触发，只有后端为 scf 时才会生效                                                     |
+| base64EncodedTriggerRules |  否  |      [Base64Rule](#Base64Rule)[]      |    []    | Header 触发 Base64 编码规则，总规则数不能超过 10，只有 `isBase64Trigger` 设置为 `true` 才有效                     |
 
 - API 类型补充说明
 
@@ -286,3 +298,29 @@ Oauth2.0 鉴权，业务 API 关联授业 API 配置，当 `authType` 为 `OAUTH
 | ------ | :--: | :----: | :----: | :------------------------- |
 | path   |  是  | string |        | 关联 `授业 API` 的请求路径 |
 | method |  是  | string |        | 关联 `授业 API` 的请求路径 |
+
+### Base64Rule
+
+Header 触发 Base64 编码规则，总规则数不能超过 10，只有 `isBase64Trigger` 设置为 `true` 才有效
+
+参考: https://tcloud-dev.oa.com/document/product/628/16924?!preview&preview_docmenu=1&lang=cn&!document=1#Base64EncodedTriggerRule
+
+| 参数名称 | 类型     | 描述                                                                                                                                          |
+| -------- | :------- | :-------------------------------------------------------------------------------------------------------------------------------------------- |
+| name     | string   | 进行编码触发的 header，可选值 "Accept"和"Content_Type" 对应实际数据流请求 header 中的 Accept 和 Content-Type                                  |
+| value    | string[] | 进行编码触发的 header 的可选值数组, 数组元素的字符串最大长度为 40，元素可以包括数字，英文字母以及特殊字符，特殊字符的可选值为： . + \* - / \_ |
+
+例如 `value` 可以配置为：
+
+```yaml
+value:
+  - application/zip
+```
+
+### 关于 API 网关 Base64 编码
+
+> 注意：开启 API 网关 Base64 编码的后端必须是 `云函数`
+
+如果需要开启 API 网关 Base64 编码，必须配置 `isBase64Encoded` 为 `true`，此时每次请求的请求内容都会被 Base64 编码后再传递给云函数。如果想要部分请求 Base64 编码，可以通过配置 `isBase64Trigger` 为 `true`，配置 `base64EncodedTriggerRules` Header 触发规则，此时 API 网关将根据触发规则对请求头进行校验，只有拥有特定 Content-Type 或 Accept 请求头的请求会被 Base64 编码后再传递给云函数，不满足条件的请求将不进行 Base64 编码，直接传递给云函数。
+
+官方介绍文档：https://cloud.tencent.com/document/product/628/51799
