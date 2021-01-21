@@ -1,5 +1,5 @@
 name: apigateway
-version: 0.1.2
+version: 0.2.0
 author: 'Tencent Cloud, Inc'
 org: 'Tencent Cloud, Inc'
 description: Easily provision Tencent API Gateway.

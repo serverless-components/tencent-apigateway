@@ -1,0 +1,29 @@
+org: orgDemo
+app: appDemo
+stage: dev
+component: apigateway
+name: apigwDemo
+
+inputs:
+  region: ap-guangzhou
+  protocols:
+    - http
+    - https
+  serviceName: 'sls_apigw_test'
+  environment: release
+  endpoints:
+    - path: /
+      protocol: HTTP
+      method: ANY
+      apiName: index
+      isBase64Encoded: true
+      isBase64Trigger: true
+      base64EncodedTriggerRules:
+        - name: Accept
+          value:
+            - image/jpeg
+        - name: Content_Type
+          value:
+            - image/jpeg
+      function:
+        functionName: serverless-unit-test
