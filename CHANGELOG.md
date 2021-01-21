@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/serverless-components/tencent-apigateway/compare/v0.1.2...v0.2.0) (2021-01-21)
+
+
+### Features
+
+* support base64 encode ([dd553b9](https://github.com/serverless-components/tencent-apigateway/commit/dd553b9175b0bc431621bf8c5643dfff2cdd4936))
+
 ## [0.1.2](https://github.com/serverless-components/tencent-apigateway/compare/v0.1.1...v0.1.2) (2020-12-17)
 
 
