@@ -1,3 +1,10 @@
+## [0.2.1](https://github.com/serverless-components/tencent-apigateway/compare/v0.2.0...v0.2.1) (2021-03-04)
+
+
+### Bug Fixes
+
+* relative oauth api update ([8b4b91f](https://github.com/serverless-components/tencent-apigateway/commit/8b4b91f50795928ac1e4a943f36795406d43fe84))
+
 # [0.2.0](https://github.com/serverless-components/tencent-apigateway/compare/v0.1.2...v0.2.0) (2021-01-21)
 
 
