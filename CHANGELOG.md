@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/serverless-components/tencent-apigateway/compare/v0.2.1...v0.3.0) (2021-03-29)
+
+
+### Features
+
+* update sdk version ([#22](https://github.com/serverless-components/tencent-apigateway/issues/22)) ([c11a8a5](https://github.com/serverless-components/tencent-apigateway/commit/c11a8a512a92e67587791ff8f57c8b9a7fb446a8))
+
 ## [0.2.1](https://github.com/serverless-components/tencent-apigateway/compare/v0.2.0...v0.2.1) (2021-03-04)
 
 
