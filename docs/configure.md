@@ -27,6 +27,7 @@ inputs:
     - domain: abc.com
       # 如要添加https，需先行在腾讯云-SSL证书进行认证获取cettificateId
       certificateId: abcdefg
+      isForcedHttps: true # 是否强制https，如果为true，必须配置 certificateId (SSL证书 ID)
       # 如要设置自定义路径映射，请设置为 false
       isDefaultMapping: false
       pathMappingSet:
@@ -272,6 +273,7 @@ API 的后端服务配置
 | isDefaultMapping |  否  |        boolean        |   `true`   | 是否使用默认路径映射。 如果要自定义路径映射，请设为`false`      |
 | pathMappingSet   |  否  | [PathMap](#PathMap)[] |    `[]`    | 自定义路径映射, 当 `isDefaultMapping` 为 `false` 时，此参数必须 |
 | protocols        |  否  |       string[]        | `['http']` | 绑定自定义域协议类型，支持 http 和 https                        |
+| isForcedHttps    |  否  |        boolean        |  `false`   | 是否强制 HTTPS。                                                |
 
 ### PathMap
 
