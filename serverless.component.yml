@@ -17,6 +17,8 @@ actions:
       serviceId:
         type: string
         regex: '^service-(\w){8,}$'
+      instanceId:
+        type: string
       serviceName:
         type: string
         description: Name of API Gateway
@@ -89,6 +91,16 @@ actions:
                   - NONE
                   - SECRET
                   - OAUTH
+                  - APP
+              app:
+                type: object
+                keys:
+                  name:
+                    type: string
+                  id:
+                    type: string
+                  description:
+                    type: string
               businessType:
                 type: string
                 allow:
