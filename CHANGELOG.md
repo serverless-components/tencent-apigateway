@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/serverless-components/tencent-apigateway/compare/v0.3.0...v0.4.0) (2021-07-30)
+
+
+### Features
+
+* support api app auth and instance ([a400f2e](https://github.com/serverless-components/tencent-apigateway/commit/a400f2ef0dc7d283c82afc425817e2ae9136cd4e))
+
 # [0.3.0](https://github.com/serverless-components/tencent-apigateway/compare/v0.2.1...v0.3.0) (2021-03-29)
 
 
