@@ -155,6 +155,7 @@ inputs:
 | 参数          | 必选 |            参数类型             |     默认值     | 描述                                                                       |
 | ------------- | :--: | :-----------------------------: | :------------: | :------------------------------------------------------------------------- |
 | serviceId     |  否  |             string              |                | 网关服务 ID                                                                |
+| instanceId    |  否  |             string              |                | 网关实例 ID，填写则使用独享型实例创建 API 网关，否则创建共享型实例（该项只能在创建时指定，创建后无法修改） |
 | region        |  是  |             string              | `ap-guangzhou` | 服务的部署区域                                                             |
 | protocols     |  是  |            string[]             |   `['http']`   | 服务的前端请求类型，http 和 https                                          |
 | serviceName   |  否  |             string              |  `serverless`  | 用户自定义的服务名称。 如果该参数未传递，则由系统自动生成一个唯一名称      |
@@ -185,7 +186,8 @@ API 参数说明
 | param                     |  否  | [RequestParameter](#RequestParameter) |          | 前端请求参数                                                                                                      |
 | serviceConfig             |  否  |    [ServiceConfig](#ServiceConfig)    |          | API 的后端服务配置                                                                                                |
 | serviceMockReturnMessage  |  否  |                string                 |          | Mock 接口类型返回结果，如果 `serviceType` 设置为 `MOCK`，此参数必须                                               |
-| authType                  |  否  |                string                 |  `NONE`  | 鉴权类型，支持：`NONE`(免鉴权)、`SECRET`(密钥对)，`OAUTH`(Oauth2.0)                                               |
+| authType                  |  否  |                string                 |  `NONE`  | 鉴权类型，支持：`NONE`(免鉴权)、`SECRET`(密钥对)，`OAUTH`(Oauth2.0)，`APP`(应用鉴权)                                           |
+| app                       |  否  |              [App](#App)              |  `NONE`  | API 绑定 APP 配置                                                                                         |
 | businessType              |  否  |                string                 | `NORMAL` | 业务类型，支持：`NORMAL`、`OAUTH`                                                                                 |
 | oauthConfig               |  否  |      [OauthConfig](#OauthConfig)      |          | Oauth2.0 鉴权，授业 API 后端配置，当 `authType` 为 `OAUTH`, 并且 businessType 为 `OAUTH` 时，此参数必须           |
 | authRelationApi           |  否  |  [AuthRelationApi](#AuthRelationApi)  |          | Oauth2.0 鉴权，业务 API 关联授业 API 配置，当 `authType` 为 `OAUTH`, 并且 businessType 为 `NORMAL` 时，此参数必须 |
@@ -300,6 +302,18 @@ Oauth2.0 鉴权，业务 API 关联授业 API 配置，当 `authType` 为 `OAUTH
 | ------ | :--: | :----: | :----: | :------------------------- |
 | path   |  是  | string |        | 关联 `授业 API` 的请求路径 |
 | method |  是  | string |        | 关联 `授业 API` 的请求路径 |
+
+###### APP
+
+API 绑定 APP 配置
+
+参考：https://cloud.tencent.com/document/product/628/55087
+
+| 参数名称    | 必选 | 类型   | 描述                |
+| ----------- | :--: | :----- | :------------------ |
+| name        |  否  | string | 用户自定义 APP 名称 |
+| id          |  否  | string | APP ID              |
+| description |  否  | string | 用户自定义 APP 描述 |
 
 ### Base64Rule
 

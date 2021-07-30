@@ -1,6 +1,6 @@
+component: apigateway
 app: appDemo
 stage: dev
-component: apigateway
 name: apigwDemo
 
 inputs:
