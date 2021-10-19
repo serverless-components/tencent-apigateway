@@ -2,7 +2,7 @@ name: apigateway
 version: 0.4.0
 author: 'Tencent Cloud, Inc'
 org: 'Tencent Cloud, Inc'
-description: Easily provision Tencent API Gateway.
+description: API 网关组件， 允许用户创建部署一个 API 网关。
 keywords: 'tencent, serverless, apigateway'
 repo: 'https://github.com/serverless-components/tencent-apigateway'
 readme: 'https://github.com/serverless-components/tencent-apigateway/tree/master/README.md'
