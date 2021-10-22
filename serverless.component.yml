@@ -1,5 +1,5 @@
 name: apigateway
-version: 0.4.0
+version: 0.4.1
 author: 'Tencent Cloud, Inc'
 org: 'Tencent Cloud, Inc'
 description: API 网关组件， 允许用户创建部署一个 API 网关。
